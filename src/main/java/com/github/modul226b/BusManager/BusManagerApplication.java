@@ -1,0 +1,13 @@
+package com.github.modul226b.BusManager;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BusManagerApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BusManagerApplication.class, args);
+	}
+
+}
