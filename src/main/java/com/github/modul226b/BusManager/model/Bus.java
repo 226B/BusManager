@@ -1,6 +1,6 @@
 package com.github.modul226b.BusManager.model;
 
 public class Bus {
-    String id;
+    String name;
     BusType type;
 }
