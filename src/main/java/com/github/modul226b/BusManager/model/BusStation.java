@@ -1,7 +1,11 @@
 package com.github.modul226b.BusManager.model;
 
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+import java.util.List;
+@Data
+@AllArgsConstructor
 public class BusStation {
     String name;
     Location location;
