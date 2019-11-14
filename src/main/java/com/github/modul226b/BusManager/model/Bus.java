@@ -6,6 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Bus {
+    public Bus() {
+    }
+
     String name;
     BusType type;
 }

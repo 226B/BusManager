@@ -6,6 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class BusType {
+    public BusType() {
+    }
+
     String name;
     int capacity;
     int recoveryTime;
