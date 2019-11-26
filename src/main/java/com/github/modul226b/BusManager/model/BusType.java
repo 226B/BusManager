@@ -13,5 +13,5 @@ public class BusType {
     int capacity;
     int recoveryTime;
     int maxRange;
-    int distancePer100;
+    double distancePerH;
 }

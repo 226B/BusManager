@@ -7,7 +7,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class Trip {
     long startTime;
-    long arrivalDate;
+    long arrivalTime;
     Bus bus;
     Location start;
     Location end;

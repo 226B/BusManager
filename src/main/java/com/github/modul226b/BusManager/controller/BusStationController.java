@@ -20,13 +20,13 @@ public class BusStationController {
     HashMap<String, BusStation> stations;
     HashMap<String, Depot> depots;
     HashMap<String, BusType> busTypes;
-    HashMap<String, GateType> gateTypes;
+    HashMap<String, TerminalType> terminalTypes;
 
     public BusStationController() {
         depots = new HashMap<>();
         stations = new HashMap<>();
         busTypes = new HashMap<>();
-        gateTypes = new HashMap<>();
+        terminalTypes = new HashMap<>();
         createMockData();
     }
 
@@ -65,23 +65,23 @@ public class BusStationController {
         stations.get("Genf").getDepot().getBuses().add(new Bus("CH06", busTypes.get("mittel")));
         stations.get("Genf").getDepot().getBuses().add(new Bus("I03", busTypes.get("gross")));
 
-        gateTypes.put("national", new GateType("national", 50));
-        gateTypes.put("international", new GateType("international", 200));
+        terminalTypes.put("national", new TerminalType("national", 50));
+        terminalTypes.put("international", new TerminalType("international", 200));
 
-        stations.get("Zürich").getGates().add(new Gate(1, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Zürich").getGates().add(new Gate(2, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Zürich").getGates().add(new Gate(3, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Zürich").getGates().add(new Gate(4, gateTypes.get("international"), new ArrayList<>()));
+        stations.get("Zürich").getTerminals().add(new Terminal(1, terminalTypes.get("national"), new ArrayList<>()));
+        stations.get("Zürich").getTerminals().add(new Terminal(2, terminalTypes.get("national"), new ArrayList<>()));
+        stations.get("Zürich").getTerminals().add(new Terminal(3, terminalTypes.get("national"), new ArrayList<>()));
+        stations.get("Zürich").getTerminals().add(new Terminal(4, terminalTypes.get("international"), new ArrayList<>()));
 
-        stations.get("Bern").getGates().add(new Gate(1, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Bern").getGates().add(new Gate(2, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Bern").getGates().add(new Gate(3, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Bern").getGates().add(new Gate(4, gateTypes.get("international"), new ArrayList<>()));
+        stations.get("Bern").getTerminals().add(new Terminal(1, terminalTypes.get("national"), new ArrayList<>()));
+        stations.get("Bern").getTerminals().add(new Terminal(2, terminalTypes.get("national"), new ArrayList<>()));
+        stations.get("Bern").getTerminals().add(new Terminal(3, terminalTypes.get("national"), new ArrayList<>()));
+        stations.get("Bern").getTerminals().add(new Terminal(4, terminalTypes.get("international"), new ArrayList<>()));
 
-        stations.get("Genf").getGates().add(new Gate(1, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Genf").getGates().add(new Gate(2, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Genf").getGates().add(new Gate(3, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Genf").getGates().add(new Gate(4, gateTypes.get("international"), new ArrayList<>()));
+        stations.get("Genf").getTerminals().add(new Terminal(1, terminalTypes.get("national"), new ArrayList<>()));
+        stations.get("Genf").getTerminals().add(new Terminal(2, terminalTypes.get("national"), new ArrayList<>()));
+        stations.get("Genf").getTerminals().add(new Terminal(3, terminalTypes.get("national"), new ArrayList<>()));
+        stations.get("Genf").getTerminals().add(new Terminal(4, terminalTypes.get("international"), new ArrayList<>()));
     }
 
 
@@ -97,7 +97,7 @@ public class BusStationController {
 
     @GetMapping("depot/set/")
     public void setDepot(@RequestBody Depot depot) {
-        depots.put(depot.getDepotName(), depot);
+        depots.put(depot.getName(), depot);
     }
 
     @GetMapping("{station}/get")
@@ -160,17 +160,17 @@ public class BusStationController {
 
 
     @GetMapping("{station}/gate/get/{id}")
-    public Gate getGate(@PathVariable(value = "station") String station, @PathVariable(value = "id") int id) {
-        for (Gate gate : stations.get(URLDecoder.decode(station, StandardCharsets.UTF_8)).getGates()) {
-            if (gate.getId() == id) {
-                return gate;
+    public Terminal getTerminal(@PathVariable(value = "station") String station, @PathVariable(value = "id") int id) {
+        for (Terminal terminal : stations.get(URLDecoder.decode(station, StandardCharsets.UTF_8)).getTerminals()) {
+            if (terminal.getId() == id) {
+                return terminal;
             }
         }
         return null;
     }
 
     @GetMapping("{station}/gate/getAll")
-    public List<Gate> getGates(@PathVariable(value = "station") String station) {
-        return stations.get(URLDecoder.decode(station, StandardCharsets.UTF_8)).getGates();
+    public List<Terminal> getTerminals(@PathVariable(value = "station") String station) {
+        return stations.get(URLDecoder.decode(station, StandardCharsets.UTF_8)).getTerminals();
     }
 }

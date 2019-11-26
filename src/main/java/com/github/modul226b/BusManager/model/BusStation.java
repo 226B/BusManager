@@ -10,5 +10,5 @@ public class BusStation {
     String name;
     Location location;
     Depot depot;
-    List<Gate> gates;
+    List<Terminal> terminals;
 }
