@@ -4,6 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class Bus {
+    private String name;
+    private BusType type;
+
     public Bus(String name, BusType type) {
         assert name != null : "name can not be null";
         assert type != null : "type can not be null";
@@ -12,8 +15,10 @@ public class Bus {
         this.type = type;
     }
 
-    private String name;
-    private BusType type;
+    public void setType(BusType type) {
+        assert type != null : "type can not be null";
+        this.type = type;
+    }
 
     @Override
     public boolean equals(Object obj) {
