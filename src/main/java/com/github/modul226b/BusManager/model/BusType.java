@@ -8,18 +8,17 @@ public class BusType {
     private int capacity;
     private int recoveryTime;
     private int maxRange;
-    private int distancePer100;
+    private int distancePerH;
 
-    public BusType(String name, int capacity, int recoveryTime, int maxRange, int distancePer100) {
+    public BusType(String name, int capacity, int recoveryTime, int maxRange, int distancePerH) {
         assert name != null : "name can not be null";
 
         this.name = name;
         this.capacity = capacity;
         this.recoveryTime = recoveryTime;
         this.maxRange = maxRange;
-        this.distancePer100 = distancePer100;
+        this.distancePerH = distancePerH;
     }
-
 
     @Override
     public boolean equals(Object obj) {
@@ -32,6 +31,6 @@ public class BusType {
                 && this.capacity == o2.capacity
                 && this.recoveryTime == o2.recoveryTime
                 && this.maxRange == o2.maxRange
-                && this.distancePer100 == o2.distancePer100;
+                && this.distancePerH == o2.distancePerH;
     }
 }

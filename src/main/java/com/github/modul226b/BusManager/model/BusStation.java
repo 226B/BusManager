@@ -7,10 +7,10 @@ import java.util.List;
 
 @Getter
 public class BusStation {
-    String name;
-    Location location;
-    Depot depot;
-    List<Gate> gates;
+    private String name;
+    private Location location;
+    private Depot depot;
+    private List<Terminal> terminals;
 
     public BusStation(String name, Location location, Depot depot) {
         assert name != null : "name can not be null.";
@@ -20,7 +20,7 @@ public class BusStation {
         this.name = name;
         this.location = location;
         this.depot = depot;
-        this.gates = new ArrayList<>();
+        this.terminals = new ArrayList<>();
     }
 
     public BusStation(String name, Depot depot, int x, int y) {
@@ -38,6 +38,6 @@ public class BusStation {
         return this.name.equalsIgnoreCase(o2.name)
                 && this.location.equals(o2.location)
                 && this.depot.equals(o2.depot)
-                && this.gates.equals(o2.gates);
+                && this.terminals.equals(o2.terminals);
     }
 }

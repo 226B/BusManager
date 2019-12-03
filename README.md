@@ -38,14 +38,14 @@ Alle anderen Attribute (der Bus und die Start- und Endgates) müssen berechnet w
 - type name
 - depot name
 
-#### GateType
+#### TerminalType
 - name
 - capacity
 
-#### Gate
+#### Terminal
 - stationName
-- Gate Type Name
-- gate id
+- Terminal Type Name
+- Terminal id
 
 
 

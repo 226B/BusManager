@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class Gate {
+public class Terminal {
     int id;
-    GateType type;
+    TerminalType type;
     List<Trip> trips;
 
-    public Gate(int id, GateType type) {
+    public Terminal(int id, TerminalType type) {
         assert type != null : "gatetype can not be null";
 
         this.id = id;
@@ -22,10 +22,10 @@ public class Gate {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Gate)) {
+        if (!(obj instanceof Terminal)) {
             return false;
         }
-        Gate o2 = (Gate) obj;
+        Terminal o2 = (Terminal) obj;
         return this.id == o2.id && this.type.equals(o2.type) && this.trips.equals(o2.trips);
     }
 }

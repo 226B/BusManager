@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 public class Depot {
-    String depotName;
+    String name;
     List<Bus> buses;
 
     public Depot(String depotName) {
