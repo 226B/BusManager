@@ -4,22 +4,34 @@ import lombok.Getter;
 
 @Getter
 public class Trip {
+    private Integer id;
     private long startTime;
     private long arrivalTime;
-    private Bus bus;
-    private Location start;
-    private Location end;
+    private String busName;
+    private int startId;
+    private int endId;
 
-    public Trip(long startTime, long arrivalTime, Bus bus, Location start, Location end) {
+    public Trip(int id, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
         assert bus != null : "bus can not be null";
         assert start != null : "start can not be null";
         assert end != null : "end can not be null";
 
+        this.id = id;
         this.startTime = startTime;
         this.arrivalTime = arrivalTime;
-        this.bus = bus;
-        this.start = start;
-        this.end = end;
+        this.busName = bus.getName();
+        this.startId = start.getId();
+        this.endId = end.getId();
+    }
+
+    public Bus getBus() {
+        return null; //todo
+    }
+    public Location getStart() {
+        return null; //todo
+    }
+    public Location getEnd() {
+        return null; //todo
     }
 
     @Override
@@ -31,8 +43,8 @@ public class Trip {
 
         return this.startTime == o2.startTime
                 && this.arrivalTime == o2.arrivalTime
-                && this.bus.equals(o2.bus)
-                && this.start.equals(o2.start)
-                && this.end.equals(o2.end);
+                && this.getBus().equals(o2.getBus())
+                && this.getStart().equals(o2.getStart())
+                && this.getEnd().equals(o2.getEnd());
     }
 }

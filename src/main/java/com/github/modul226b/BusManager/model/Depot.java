@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 public class Depot {
     private String name;
-    private List<Bus> buses;
+    private List<String> buses;
 
     public Depot(String depotName) {
         assert depotName != null : "name should not be null.";

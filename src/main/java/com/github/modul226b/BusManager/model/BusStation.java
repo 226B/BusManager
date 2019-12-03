@@ -8,9 +8,9 @@ import java.util.List;
 @Getter
 public class BusStation {
     private String name;
-    private Location location;
-    private Depot depot;
-    private List<Terminal> terminals;
+    private int locationId;
+    private String depotName;
+    private List<Integer> terminals;
 
     public BusStation(String name, Location location, Depot depot) {
         assert name != null : "name can not be null.";
@@ -18,15 +18,22 @@ public class BusStation {
         assert depot != null : "depot can not be null";
 
         this.name = name;
-        this.location = location;
-        this.depot = depot;
+        this.locationId = location.getId();
+        this.depotName = depot.getName();
         this.terminals = new ArrayList<>();
     }
 
     public BusStation(String name, Depot depot, int x, int y) {
-        this(name, new Location(x, y), depot);
+        this(name, new Location(0,x, y), depot);
+    } //todo
+
+    public Location getLocation() {
+        return null; // todo
     }
 
+    public Depot getDepot() {
+        return null; //todo
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -36,8 +43,8 @@ public class BusStation {
         BusStation o2 = (BusStation) obj;
 
         return this.name.equalsIgnoreCase(o2.name)
-                && this.location.equals(o2.location)
-                && this.depot.equals(o2.depot)
+                && this.getLocation().equals(o2.getLocation())
+                && this.getDepot().equals(o2.getDepot())
                 && this.terminals.equals(o2.terminals);
     }
 }

@@ -4,10 +4,12 @@ import lombok.Getter;
 
 @Getter
 public class Location {
+    private int id;
     private int x;
     private int y;
 
-    public Location(int x, int y) {
+    public Location(int id, int x, int y) {
+        this.id = id;
         this.x = x;
         this.y = y;
     }

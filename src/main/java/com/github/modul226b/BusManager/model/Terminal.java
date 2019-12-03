@@ -7,18 +7,21 @@ import java.util.List;
 
 @Getter
 public class Terminal {
-    int id;
-    TerminalType type;
-    List<Trip> trips;
+    Integer id;
+    String typeName;
+    List<Integer> trips;
 
     public Terminal(int id, TerminalType type) {
         assert type != null : "gatetype can not be null";
 
         this.id = id;
-        this.type = type;
+        this.typeName = type.getName();
         this.trips = new ArrayList<>();
     }
 
+    public TerminalType getType() {
+        return null; //todo
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -26,6 +29,6 @@ public class Terminal {
             return false;
         }
         Terminal o2 = (Terminal) obj;
-        return this.id == o2.id && this.type.equals(o2.type) && this.trips.equals(o2.trips);
+        return this.id == o2.id && this.getType().equals(o2.getType()) && this.trips.equals(o2.trips);
     }
 }

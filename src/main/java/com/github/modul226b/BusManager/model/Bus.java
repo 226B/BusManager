@@ -5,19 +5,23 @@ import lombok.Getter;
 @Getter
 public class Bus {
     private String name;
-    private BusType type;
+    private String typeName;
 
     public Bus(String name, BusType type) {
         assert name != null : "name can not be null";
-        assert type != null : "type can not be null";
+        assert type != null : "Type can not be null";
 
         this.name = name;
-        this.type = type;
+        this.typeName = type.getName();
     }
 
     public void setType(BusType type) {
         assert type != null : "type can not be null";
-        this.type = type;
+        this.typeName = type.getName();
+    }
+
+    public BusType getType() {
+        return null; //todo
     }
 
     @Override
@@ -26,6 +30,6 @@ public class Bus {
             return false;
         }
         Bus o2 = (Bus) obj;
-        return o2.name.equalsIgnoreCase(this.name) && this.getType().equals(o2.type);
+        return o2.name.equalsIgnoreCase(this.name) && this.getType().equals(o2.getType());
     }
 }

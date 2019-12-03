@@ -8,7 +8,7 @@ public class BusType {
     private int capacity;
     private int recoveryTime;
     private int maxRange;
-    private int distancePerH;
+    private double distancePerH;
 
     public BusType(String name, int capacity, int recoveryTime, int maxRange, int distancePerH) {
         assert name != null : "name can not be null";
