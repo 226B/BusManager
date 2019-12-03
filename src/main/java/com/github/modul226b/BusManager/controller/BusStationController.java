@@ -1,11 +1,16 @@
 package com.github.modul226b.BusManager.controller;
 
 import com.github.modul226b.BusManager.model.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -73,15 +78,24 @@ public class BusStationController {
         stations.get("Zürich").getGates().add(new Gate(3, gateTypes.get("national"), new ArrayList<>()));
         stations.get("Zürich").getGates().add(new Gate(4, gateTypes.get("international"), new ArrayList<>()));
 
-        stations.get("Bern").getGates().add(new Gate(1, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Bern").getGates().add(new Gate(2, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Bern").getGates().add(new Gate(3, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Bern").getGates().add(new Gate(4, gateTypes.get("international"), new ArrayList<>()));
+        stations.get("Bern").getGates().add(new Gate(4, gateTypes.get("national"), new ArrayList<>()));
+        stations.get("Bern").getGates().add(new Gate(5, gateTypes.get("national"), new ArrayList<>()));
+        stations.get("Bern").getGates().add(new Gate(6, gateTypes.get("national"), new ArrayList<>()));
+        stations.get("Bern").getGates().add(new Gate(7, gateTypes.get("international"), new ArrayList<>()));
 
-        stations.get("Genf").getGates().add(new Gate(1, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Genf").getGates().add(new Gate(2, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Genf").getGates().add(new Gate(3, gateTypes.get("national"), new ArrayList<>()));
-        stations.get("Genf").getGates().add(new Gate(4, gateTypes.get("international"), new ArrayList<>()));
+        stations.get("Genf").getGates().add(new Gate(8, gateTypes.get("national"), new ArrayList<>()));
+        stations.get("Genf").getGates().add(new Gate(9, gateTypes.get("national"), new ArrayList<>()));
+        stations.get("Genf").getGates().add(new Gate(10, gateTypes.get("national"), new ArrayList<>()));
+        stations.get("Genf").getGates().add(new Gate(11, gateTypes.get("international"), new ArrayList<>()));
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String string  = gson.toJson(stations);
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\temp\\busmanager\\r.json", true));
+            writer.append(string);
+            writer.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
 
@@ -119,6 +133,10 @@ public class BusStationController {
     @GetMapping("bustype/getAll/")
     public Collection<BusType> getAllBusTypes() {
         return busTypes.values();
+    }
+    @GetMapping("bustype/add/")
+    public void setBusType(@RequestBody BusType type) {
+        busTypes.put(type.getName(), type);
     }
 
 

@@ -1,11 +1,24 @@
 package com.github.modul226b.BusManager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
+@Getter
 public class Location {
-    int x;
-    int y;
+    private int x;
+    private int y;
+
+    public Location(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Location)) {
+            return false;
+        }
+        Location o2 = (Location) obj;
+
+        return this.x == o2.x && this.y == o2.y;
+    }
 }

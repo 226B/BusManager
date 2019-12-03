@@ -1,17 +1,37 @@
 package com.github.modul226b.BusManager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
+@Getter
 public class BusType {
-    public BusType() {
+    private String name;
+    private int capacity;
+    private int recoveryTime;
+    private int maxRange;
+    private int distancePer100;
+
+    public BusType(String name, int capacity, int recoveryTime, int maxRange, int distancePer100) {
+        assert name != null : "name can not be null";
+
+        this.name = name;
+        this.capacity = capacity;
+        this.recoveryTime = recoveryTime;
+        this.maxRange = maxRange;
+        this.distancePer100 = distancePer100;
     }
 
-    String name;
-    int capacity;
-    int recoveryTime;
-    int maxRange;
-    int distancePer100;
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof BusType)) {
+            return false;
+        }
+        BusType o2 = (BusType) obj;
+
+        return this.name.equalsIgnoreCase(o2.name)
+                && this.capacity == o2.capacity
+                && this.recoveryTime == o2.recoveryTime
+                && this.maxRange == o2.maxRange
+                && this.distancePer100 == o2.distancePer100;
+    }
 }
