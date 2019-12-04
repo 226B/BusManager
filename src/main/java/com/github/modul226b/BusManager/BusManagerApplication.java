@@ -10,7 +10,7 @@ public class BusManagerApplication {
 
     public static void main(String[] args) {
 
-        createMockData();
+        //createMockData();
         SpringApplication.run(BusManagerApplication.class, args);
     }
 
