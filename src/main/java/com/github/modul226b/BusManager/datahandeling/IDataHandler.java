@@ -14,7 +14,11 @@ public interface IDataHandler {
 
     List<Bus> getBuses(List<String> terminals);
 
+    List<Bus> getBuses();
+
     BusType getBusType(String name);
+
+    List<BusType> getBusTypes();
 
     Terminal getTerminal(Integer id);
 

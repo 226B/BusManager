@@ -60,8 +60,18 @@ public class JsonDataHandler implements IDataHandler {
     }
 
     @Override
+    public List<Bus> getBuses() {
+        return new ArrayList<>(dataHolder.getBuses().values());
+    }
+
+    @Override
     public BusType getBusType(String name) {
         return dataHolder.getBusTypes().getOrDefault(name, null);
+    }
+
+    @Override
+    public List<BusType> getBusTypes() {
+        return new ArrayList<>(dataHolder.getBusTypes().values());
     }
 
     @Override

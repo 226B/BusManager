@@ -7,8 +7,8 @@ import lombok.experimental.Delegate;
 
 public class DataManager {
     private static DataManager instance;
-    @Delegate
     @Getter
+    @Delegate
     private IDataHandler dataHandler;
 
     public DataManager(IDataHandler handler) {
