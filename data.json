@@ -1,0 +1,276 @@
+{
+  "fileManager": {
+    "fileName": "data.json"
+  },
+  "dataHolder": {
+    "stations": {
+      "Bern": {
+        "name": "Bern",
+        "locationId": 1,
+        "depotName": "Bern",
+        "terminalIds": [
+          4,
+          5,
+          6,
+          7
+        ]
+      },
+      "Zürich": {
+        "name": "Zürich",
+        "locationId": 0,
+        "depotName": "Zürich",
+        "terminalIds": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "Genf": {
+        "name": "Genf",
+        "locationId": 2,
+        "depotName": "Genf",
+        "terminalIds": [
+          8,
+          9,
+          10,
+          11
+        ]
+      }
+    },
+    "buses": {
+      "GE03": {
+        "name": "GE03",
+        "typeName": "klein"
+      },
+      "GE02": {
+        "name": "GE02",
+        "typeName": "klein"
+      },
+      "ZH01": {
+        "name": "ZH01",
+        "typeName": "klein"
+      },
+      "I02": {
+        "name": "I02",
+        "typeName": "gross"
+      },
+      "I01": {
+        "name": "I01",
+        "typeName": "gross"
+      },
+      "I03": {
+        "name": "I03",
+        "typeName": "gross"
+      },
+      "CH06": {
+        "name": "CH06",
+        "typeName": "mittel"
+      },
+      "CH05": {
+        "name": "CH05",
+        "typeName": "mittel"
+      },
+      "CH04": {
+        "name": "CH04",
+        "typeName": "mittel"
+      },
+      "CH03": {
+        "name": "CH03",
+        "typeName": "mittel"
+      },
+      "ZH03": {
+        "name": "ZH03",
+        "typeName": "klein"
+      },
+      "CH02": {
+        "name": "CH02",
+        "typeName": "mittel"
+      },
+      "ZH02": {
+        "name": "ZH02",
+        "typeName": "klein"
+      },
+      "BE03": {
+        "name": "BE03",
+        "typeName": "klein"
+      },
+      "CH01": {
+        "name": "CH01",
+        "typeName": "mittel"
+      },
+      "BE02": {
+        "name": "BE02",
+        "typeName": "klein"
+      },
+      "BE01": {
+        "name": "BE01",
+        "typeName": "klein"
+      },
+      "GE01": {
+        "name": "GE01",
+        "typeName": "klein"
+      }
+    },
+    "busTypes": {
+      "gross": {
+        "name": "gross",
+        "capacity": 100,
+        "recoveryTime": 20,
+        "maxRange": 1000,
+        "distancePerH": 100.0
+      },
+      "mittel": {
+        "name": "mittel",
+        "capacity": 50,
+        "recoveryTime": 10,
+        "maxRange": 200,
+        "distancePerH": 150.0
+      },
+      "klein": {
+        "name": "klein",
+        "capacity": 20,
+        "recoveryTime": 5,
+        "maxRange": 100,
+        "distancePerH": 200.0
+      }
+    },
+    "terminals": {
+      "0": {
+        "id": 0,
+        "displayName": "Z01",
+        "typeName": "national",
+        "tripIds": []
+      },
+      "1": {
+        "id": 1,
+        "displayName": "Z02",
+        "typeName": "national",
+        "tripIds": []
+      },
+      "2": {
+        "id": 2,
+        "displayName": "Z03",
+        "typeName": "national",
+        "tripIds": []
+      },
+      "3": {
+        "id": 3,
+        "displayName": "Z04",
+        "typeName": "international",
+        "tripIds": []
+      },
+      "4": {
+        "id": 4,
+        "displayName": "B01",
+        "typeName": "national",
+        "tripIds": []
+      },
+      "5": {
+        "id": 5,
+        "displayName": "B02",
+        "typeName": "national",
+        "tripIds": []
+      },
+      "6": {
+        "id": 6,
+        "displayName": "B03",
+        "typeName": "national",
+        "tripIds": []
+      },
+      "7": {
+        "id": 7,
+        "displayName": "B04",
+        "typeName": "international",
+        "tripIds": []
+      },
+      "8": {
+        "id": 8,
+        "displayName": "G01",
+        "typeName": "national",
+        "tripIds": []
+      },
+      "9": {
+        "id": 9,
+        "displayName": "G02",
+        "typeName": "national",
+        "tripIds": []
+      },
+      "10": {
+        "id": 10,
+        "displayName": "G03",
+        "typeName": "national",
+        "tripIds": []
+      },
+      "11": {
+        "id": 11,
+        "displayName": "G04",
+        "typeName": "international",
+        "tripIds": []
+      }
+    },
+    "terminalTypes": {
+      "national": {
+        "name": "national",
+        "capacity": 50
+      },
+      "international": {
+        "name": "international",
+        "capacity": 200
+      }
+    },
+    "depots": {
+      "Bern": {
+        "name": "Bern",
+        "busNames": [
+          "BE01",
+          "BE02",
+          "BE03",
+          "CH03",
+          "CH04",
+          "I02"
+        ]
+      },
+      "Zürich": {
+        "name": "Zürich",
+        "busNames": [
+          "ZH01",
+          "ZH02",
+          "ZH03",
+          "CH01",
+          "CH02",
+          "I01"
+        ]
+      },
+      "Genf": {
+        "name": "Genf",
+        "busNames": [
+          "GE01",
+          "GE02",
+          "GE03",
+          "CH05",
+          "CH06",
+          "I03"
+        ]
+      }
+    },
+    "locations": {
+      "0": {
+        "id": 0,
+        "x": 10,
+        "y": 20
+      },
+      "1": {
+        "id": 1,
+        "x": 20,
+        "y": 100
+      },
+      "2": {
+        "id": 2,
+        "x": -10,
+        "y": 50
+      }
+    },
+    "trips": {}
+  }
+}

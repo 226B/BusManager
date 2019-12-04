@@ -28,6 +28,10 @@ public class BusStation {
         this(name, new Location(DataManager.getInstance().getNextLocationId(),x, y), depot);
     }
 
+    public void addTerminal(int id) {
+        terminalIds.add(id); //todo validate
+    }
+
     public Location getLocation() {
         return DataManager.getInstance().getLocation(this.locationId);
     }

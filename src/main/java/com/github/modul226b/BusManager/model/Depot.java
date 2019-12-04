@@ -10,17 +10,21 @@ import java.util.List;
 @Getter
 public class Depot {
     private String name;
-    private List<String> buses;
+    private List<String> busNames;
 
     public Depot(String depotName) {
         assert depotName != null : "name should not be null.";
 
         this.name = depotName;
-        this.buses = new ArrayList<>();
+        this.busNames = new ArrayList<>();
     }
 
     public List<Bus> getBuses() {
-        return DataManager.getInstance().getBuses(buses);
+        return DataManager.getInstance().getBuses(busNames);
+    }
+
+    public void addBus(String bus) {
+        busNames.add(bus);
     }
 
     @Override
@@ -29,6 +33,6 @@ public class Depot {
             return false;
         }
         Depot o2 = (Depot) obj;
-        return this.name.equalsIgnoreCase(o2.name) && this.buses.equals(o2.buses);
+        return this.name.equalsIgnoreCase(o2.name) && this.busNames.equals(o2.busNames);
     }
 }

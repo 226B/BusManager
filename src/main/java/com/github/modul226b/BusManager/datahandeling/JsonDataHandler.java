@@ -1,9 +1,14 @@
 package com.github.modul226b.BusManager.datahandeling;
 
+import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.manager.FileManager;
 import com.github.modul226b.BusManager.model.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import lombok.Getter;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,6 +28,18 @@ public class JsonDataHandler implements IDataHandler {
                 e.printStackTrace();
             }
         }
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String string = gson.toJson(DataManager.getInstance().getDataHandler());
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFileName));
+                writer.append(string);
+                writer.close();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }));
     }
 
     public JsonDataHandler(String jsonFileName) {
@@ -55,7 +72,7 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public Integer getNextTerminalId() {
-        return Collections.max(dataHolder.getTerminals().keySet());
+        return (dataHolder.getTerminals().size() > 0) ? Collections.max(dataHolder.getTerminals().keySet())+1 : 0;
     }
 
     @Override
@@ -79,7 +96,7 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public Integer getNextLocationId() {
-        return Collections.max(dataHolder.getLocations().keySet());
+        return (dataHolder.getLocations().size() > 0) ? Collections.max(dataHolder.getLocations().keySet())+1 : 0;
     }
 
     @Override
@@ -89,7 +106,7 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public Integer getNextTripId() {
-        return Collections.max(dataHolder.getTrips().keySet());
+        return (dataHolder.getTrips().size() > 0) ? Collections.max(dataHolder.getTrips().keySet())+1 : 0;
     }
 
     @Override
@@ -109,5 +126,45 @@ public class JsonDataHandler implements IDataHandler {
     @Override
     public BusStation getStation(String name) {
         return dataHolder.getStations().getOrDefault(name, null);
+    }
+
+    @Override
+    public void addBus(Bus bus) {
+        dataHolder.getBuses().put(bus.getName(), bus);
+    }
+
+    @Override
+    public void addBusType(BusType type) {
+        dataHolder.getBusTypes().put(type.getName(), type);
+    }
+
+    @Override
+    public void addTerminal(Terminal terminal) {
+        dataHolder.getTerminals().put(terminal.getId(), terminal);
+    }
+
+    @Override
+    public void addTerminalType(TerminalType type) {
+        dataHolder.getTerminalTypes().put(type.getName(), type);
+    }
+
+    @Override
+    public void addLocation(Location location) {
+        dataHolder.getLocations().put(location.getId(), location);
+    }
+
+    @Override
+    public void addTrip(Trip trip) {
+        dataHolder.getTrips().put(trip.getId(), trip);
+    }
+
+    @Override
+    public void addDepot(Depot depot) {
+        dataHolder.getDepots().put(depot.getName(), depot);
+    }
+
+    @Override
+    public void addStation(BusStation station) {
+        dataHolder.getStations().put(station.getName(), station);
     }
 }

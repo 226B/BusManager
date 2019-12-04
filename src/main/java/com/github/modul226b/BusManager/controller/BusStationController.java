@@ -31,7 +31,7 @@ public class BusStationController {
         stations = new HashMap<>();
         busTypes = new HashMap<>();
         terminalTypes = new HashMap<>();
-        createMockData();
+        //createMockData();
     }
 
     public void createMockData() {
@@ -72,25 +72,25 @@ public class BusStationController {
         terminalTypes.put("national", new TerminalType("national", 50));
         terminalTypes.put("international", new TerminalType("international", 200));
 
-        stations.get("Zürich").getTerminals().add(new Terminal(1, terminalTypes.get("national")));
-        stations.get("Zürich").getTerminals().add(new Terminal(2, terminalTypes.get("national")));
-        stations.get("Zürich").getTerminals().add(new Terminal(3, terminalTypes.get("national")));
-        stations.get("Zürich").getTerminals().add(new Terminal(4, terminalTypes.get("international")));
+        stations.get("Zürich").getTerminals().add(new Terminal("1", terminalTypes.get("national")));
+        stations.get("Zürich").getTerminals().add(new Terminal("2", terminalTypes.get("national")));
+        stations.get("Zürich").getTerminals().add(new Terminal("3", terminalTypes.get("national")));
+        stations.get("Zürich").getTerminals().add(new Terminal("4", terminalTypes.get("international")));
         
-        stations.get("Bern").getTerminals().add(new Terminal(5, terminalTypes.get("national")));
-        stations.get("Bern").getTerminals().add(new Terminal(6, terminalTypes.get("national")));
-        stations.get("Bern").getTerminals().add(new Terminal(7, terminalTypes.get("national")));
-        stations.get("Bern").getTerminals().add(new Terminal(8, terminalTypes.get("international")));
+        stations.get("Bern").getTerminals().add(new Terminal("1", terminalTypes.get("national")));
+        stations.get("Bern").getTerminals().add(new Terminal("2", terminalTypes.get("national")));
+        stations.get("Bern").getTerminals().add(new Terminal("3", terminalTypes.get("national")));
+        stations.get("Bern").getTerminals().add(new Terminal("4", terminalTypes.get("international")));
 
-        stations.get("Genf").getTerminals().add(new Terminal(9, terminalTypes.get("national")));
-        stations.get("Genf").getTerminals().add(new Terminal(10, terminalTypes.get("national")));
-        stations.get("Genf").getTerminals().add(new Terminal(11, terminalTypes.get("national")));
-        stations.get("Genf").getTerminals().add(new Terminal(12, terminalTypes.get("international")));
+        stations.get("Genf").getTerminals().add(new Terminal("1", terminalTypes.get("national")));
+        stations.get("Genf").getTerminals().add(new Terminal("2", terminalTypes.get("national")));
+        stations.get("Genf").getTerminals().add(new Terminal("3", terminalTypes.get("national")));
+        stations.get("Genf").getTerminals().add(new Terminal("4", terminalTypes.get("international")));
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String string  = gson.toJson(stations);
         try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\temp\\busmanager\\r.json", true));
+            BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\temp\\busmanager\\r2.json", true));
             writer.append(string);
             writer.close();
         } catch (IOException ex) {

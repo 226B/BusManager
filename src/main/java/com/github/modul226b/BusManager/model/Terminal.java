@@ -9,19 +9,22 @@ import java.util.List;
 @Getter
 public class Terminal {
     Integer id;
+    String displayName;
     String typeName;
     List<Integer> tripIds;
 
-    public Terminal(Integer id, TerminalType type) {
+    public Terminal(Integer id, String displayName,TerminalType type) {
         assert type != null : "gatetype can not be null";
+        assert displayName != null : "displayName can not be null";
 
         this.id = id;
+        this.displayName = displayName;
         this.typeName = type.getName();
         this.tripIds = new ArrayList<>();
     }
 
-    public Terminal(TerminalType type) {
-        this(DataManager.getInstance().getNextTerminalId(), type);
+    public Terminal(String displayName, TerminalType type) {
+        this(DataManager.getInstance().getNextTerminalId(), displayName,type);
     }
 
     public TerminalType getType() {
