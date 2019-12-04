@@ -18,6 +18,11 @@ public class BusStation {
         assert location != null : "location can not be null.";
         assert depot != null : "depot can not be null";
 
+        DataManager instance = DataManager.getInstance();
+
+        assert instance.getLocation(location.getId()) != null : "location must be registered.";
+        assert instance.getDepot(depot.getName()) != null : "depot must be registered.";
+
         this.name = name;
         this.locationId = location.getId();
         this.depotName = depot.getName();
@@ -25,11 +30,14 @@ public class BusStation {
     }
 
     public BusStation(String name, Depot depot, Integer x, Integer y) {
-        this(name, new Location(DataManager.getInstance().getNextLocationId(),x, y), depot);
+        this(name, new Location(DataManager.getInstance().getNextLocationId(), x, y), depot);
     }
 
     public void addTerminal(int id) {
-        terminalIds.add(id); //todo validate
+        DataManager instance = DataManager.getInstance();
+        assert instance.getTerminal(id) != null : "terminal must be registered.";
+
+        terminalIds.add(id);
     }
 
     public Location getLocation() {

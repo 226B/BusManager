@@ -23,7 +23,7 @@ public class FileManager {
             System.out.println("file '" + path.toAbsolutePath().toString() + "' not found. Trying to create file...");
             if (!f.createNewFile()) {
                 System.out.println("file '" + path.toAbsolutePath().toString() + "' could not be created.");
-            }else {
+            } else {
                 System.out.println("file successfully created");
             }
             return new JsonDataHolder();

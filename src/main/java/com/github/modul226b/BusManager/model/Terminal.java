@@ -13,9 +13,12 @@ public class Terminal {
     String typeName;
     List<Integer> tripIds;
 
-    public Terminal(Integer id, String displayName,TerminalType type) {
+    public Terminal(Integer id, String displayName, TerminalType type) {
         assert type != null : "gatetype can not be null";
         assert displayName != null : "displayName can not be null";
+
+        DataManager instance = DataManager.getInstance();
+        assert instance.getTerminalType(type.getName()) != null : "terminal type must be registered";
 
         this.id = id;
         this.displayName = displayName;
@@ -24,7 +27,7 @@ public class Terminal {
     }
 
     public Terminal(String displayName, TerminalType type) {
-        this(DataManager.getInstance().getNextTerminalId(), displayName,type);
+        this(DataManager.getInstance().getNextTerminalId(), displayName, type);
     }
 
     public TerminalType getType() {

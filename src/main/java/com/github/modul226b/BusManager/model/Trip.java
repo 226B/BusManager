@@ -17,6 +17,13 @@ public class Trip {
         assert start != null : "start can not be null";
         assert end != null : "end can not be null";
 
+        DataManager instance = DataManager.getInstance();
+
+        assert instance.getBus(bus.getName()) != null : "bus must be registered.";
+        assert instance.getLocation(start.getId()) != null : "start Location must be registered.";
+        assert instance.getLocation(end.getId()) != null : "end Location must be registered.";
+
+
         this.id = id;
         this.startTime = startTime;
         this.arrivalTime = arrivalTime;
@@ -33,9 +40,11 @@ public class Trip {
     public Bus getBus() {
         return DataManager.getInstance().getBus(this.busName);
     }
+
     public Location getStart() {
         return DataManager.getInstance().getLocation(this.startId);
     }
+
     public Location getEnd() {
         return DataManager.getInstance().getLocation(this.endId);
     }

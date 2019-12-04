@@ -7,14 +7,6 @@ import lombok.experimental.Delegate;
 
 public class DataManager {
     private static DataManager instance;
-
-    public static DataManager getInstance() {
-        if (instance == null) {
-            instance = new DataManager();
-        }
-        return instance;
-    }
-
     @Delegate
     @Getter
     private IDataHandler dataHandler;
@@ -25,5 +17,12 @@ public class DataManager {
 
     protected DataManager() {
         dataHandler = new JsonDataHandler("data.json");
+    }
+
+    public static DataManager getInstance() {
+        if (instance == null) {
+            instance = new DataManager();
+        }
+        return instance;
     }
 }

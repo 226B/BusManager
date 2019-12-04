@@ -12,17 +12,20 @@ public class Bus {
         assert name != null : "name can not be null";
         assert type != null : "Type can not be null";
 
-        this.name = name;
-        this.typeName = type.getName();
-    }
+        DataManager instance = DataManager.getInstance();
+        assert instance.getBusType(type.getName()) != null : "bustype must be registered.";
 
-    public void setType(BusType type) {
-        assert type != null : "type can not be null";
+        this.name = name;
         this.typeName = type.getName();
     }
 
     public BusType getType() {
         return DataManager.getInstance().getBusType(this.typeName);
+    }
+
+    public void setType(BusType type) {
+        assert type != null : "type can not be null";
+        this.typeName = type.getName();
     }
 
     @Override

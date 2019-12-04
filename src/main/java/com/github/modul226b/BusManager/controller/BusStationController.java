@@ -40,9 +40,9 @@ public class BusStationController {
         depots.put("Genf", new Depot("Genf"));
         depots.put("Luzern", new Depot("Luzern"));
 
-        stations.put("Zürich", new BusStation("Zürich", new Location(1,10, 20), depots.get("Zürich")));
-        stations.put("Bern", new BusStation("Bern", new Location(2,20, 100), depots.get("Bern")));
-        stations.put("Genf", new BusStation("Genf", new Location(3,-10, 50), depots.get("Genf")));
+        stations.put("Zürich", new BusStation("Zürich", new Location(1, 10, 20), depots.get("Zürich")));
+        stations.put("Bern", new BusStation("Bern", new Location(2, 20, 100), depots.get("Bern")));
+        stations.put("Genf", new BusStation("Genf", new Location(3, -10, 50), depots.get("Genf")));
 
         busTypes.put("klein", new BusType("klein", 20, 5, 100, 200));
         busTypes.put("mittel", new BusType("mittel", 50, 10, 200, 150));
@@ -76,7 +76,7 @@ public class BusStationController {
         stations.get("Zürich").getTerminals().add(new Terminal("2", terminalTypes.get("national")));
         stations.get("Zürich").getTerminals().add(new Terminal("3", terminalTypes.get("national")));
         stations.get("Zürich").getTerminals().add(new Terminal("4", terminalTypes.get("international")));
-        
+
         stations.get("Bern").getTerminals().add(new Terminal("1", terminalTypes.get("national")));
         stations.get("Bern").getTerminals().add(new Terminal("2", terminalTypes.get("national")));
         stations.get("Bern").getTerminals().add(new Terminal("3", terminalTypes.get("national")));
@@ -86,9 +86,9 @@ public class BusStationController {
         stations.get("Genf").getTerminals().add(new Terminal("2", terminalTypes.get("national")));
         stations.get("Genf").getTerminals().add(new Terminal("3", terminalTypes.get("national")));
         stations.get("Genf").getTerminals().add(new Terminal("4", terminalTypes.get("international")));
-        
+
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String string  = gson.toJson(stations);
+        String string = gson.toJson(stations);
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\temp\\busmanager\\r2.json", true));
             writer.append(string);
@@ -134,6 +134,7 @@ public class BusStationController {
     public Collection<BusType> getAllBusTypes() {
         return busTypes.values();
     }
+
     @GetMapping("bustype/add/")
     public void setBusType(@RequestBody BusType type) {
         busTypes.put(type.getName(), type);

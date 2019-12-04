@@ -1,6 +1,5 @@
 package com.github.modul226b.BusManager.datahandeling;
 
-import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.manager.FileManager;
 import com.github.modul226b.BusManager.model.*;
 import com.google.gson.Gson;
@@ -72,7 +71,7 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public Integer getNextTerminalId() {
-        return (dataHolder.getTerminals().size() > 0) ? Collections.max(dataHolder.getTerminals().keySet())+1 : 0;
+        return (dataHolder.getTerminals().size() > 0) ? Collections.max(dataHolder.getTerminals().keySet()) + 1 : 0;
     }
 
     @Override
@@ -96,7 +95,7 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public Integer getNextLocationId() {
-        return (dataHolder.getLocations().size() > 0) ? Collections.max(dataHolder.getLocations().keySet())+1 : 0;
+        return (dataHolder.getLocations().size() > 0) ? Collections.max(dataHolder.getLocations().keySet()) + 1 : 0;
     }
 
     @Override
@@ -106,7 +105,7 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public Integer getNextTripId() {
-        return (dataHolder.getTrips().size() > 0) ? Collections.max(dataHolder.getTrips().keySet())+1 : 0;
+        return (dataHolder.getTrips().size() > 0) ? Collections.max(dataHolder.getTrips().keySet()) + 1 : 0;
     }
 
     @Override

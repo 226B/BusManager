@@ -24,6 +24,9 @@ public class Depot {
     }
 
     public void addBus(String bus) {
+        DataManager instance = DataManager.getInstance();
+        assert instance.getBus(bus) != null : "bus must be registered.";
+
         busNames.add(bus);
     }
 
