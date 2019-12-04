@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/bus/")
-@CrossOrigin("http://localhost:4200/")
+@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 public class BusController {
     @GetMapping("get/")
     public List<BusDao> getAllBuses() {
@@ -21,6 +22,13 @@ public class BusController {
         for (Bus bus : DataManager.getInstance().getBuses()) {
             daos.add(BusDao.ToDao(bus));
         }
+
+        Comparator<BusDao> comparing = Comparator.comparing(o -> o.getType().getName());
+        comparing = comparing.thenComparing(BusDao::getName);
+
+        daos.sort(
+                comparing
+        );
         return daos;
     }
 
