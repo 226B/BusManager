@@ -31,7 +31,7 @@ public class JsonDataHandler implements IDataHandler {
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            String string = gson.toJson(DataManager.getInstance().getDataHandler());
+            String string = gson.toJson(dataHolder);
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFileName));
                 writer.append(string);
