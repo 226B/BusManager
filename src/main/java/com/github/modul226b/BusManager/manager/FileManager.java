@@ -28,7 +28,14 @@ public class FileManager {
             }
             return new JsonDataHolder();
         } else {
-            return new Gson().fromJson(String.join(" ", Files.readAllLines(path.toAbsolutePath())), JsonDataHolder.class);
+            JsonDataHolder jsonDataHolder = new Gson().fromJson(String.join(" ", Files.readAllLines(path.toAbsolutePath())), JsonDataHolder.class);
+
+            if (jsonDataHolder == null) {
+                System.out.println("date could not be loaded from json file...");
+                jsonDataHolder = new JsonDataHolder();
+            }
+
+            return jsonDataHolder;
         }
     }
 }
