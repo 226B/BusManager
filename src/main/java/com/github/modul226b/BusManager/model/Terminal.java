@@ -1,5 +1,6 @@
 package com.github.modul226b.BusManager.model;
 
+import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -9,18 +10,26 @@ import java.util.List;
 public class Terminal {
     Integer id;
     String typeName;
-    List<Integer> trips;
+    List<Integer> tripIds;
 
-    public Terminal(int id, TerminalType type) {
+    public Terminal(Integer id, TerminalType type) {
         assert type != null : "gatetype can not be null";
 
         this.id = id;
         this.typeName = type.getName();
-        this.trips = new ArrayList<>();
+        this.tripIds = new ArrayList<>();
+    }
+
+    public Terminal(TerminalType type) {
+        this(DataManager.getInstance().getNextTerminalId(), type);
     }
 
     public TerminalType getType() {
-        return null; //todo
+        return DataManager.getInstance().getTerminalType(typeName);
+    }
+
+    public List<Trip> getTrips() {
+        return DataManager.getInstance().getTrips(tripIds);
     }
 
     @Override
@@ -29,6 +38,6 @@ public class Terminal {
             return false;
         }
         Terminal o2 = (Terminal) obj;
-        return this.id == o2.id && this.getType().equals(o2.getType()) && this.trips.equals(o2.trips);
+        return this.id.equals(o2.id) && this.getType().equals(o2.getType()) && this.tripIds.equals(o2.tripIds);
     }
 }

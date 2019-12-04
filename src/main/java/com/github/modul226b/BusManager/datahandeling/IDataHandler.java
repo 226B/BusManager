@@ -1,0 +1,45 @@
+package com.github.modul226b.BusManager.datahandeling;
+
+import com.github.modul226b.BusManager.model.*;
+
+import java.util.Arrays;
+import java.util.List;
+
+public interface IDataHandler {
+    Bus getBus(String name);
+
+    default List<Bus> getBuses(String... buses) {
+        return getBuses(Arrays.asList(buses));
+    }
+    List<Bus> getBuses(List<String> terminals);
+
+    BusType getBusType(String name);
+
+    Terminal getTerminal(Integer id);
+
+    Integer getNextTerminalId();
+
+    default List<Terminal> getTerminals(Integer... terminals) {
+        return getTerminals(Arrays.asList(terminals));
+    }
+    List<Terminal> getTerminals(List<Integer> terminals);
+
+    TerminalType getTerminalType(String name);
+
+    Location getLocation(Integer id);
+
+    Integer getNextLocationId();
+
+    Trip getTrip(Integer id);
+
+    Integer getNextTripId();
+
+    default List<Trip> getTrips(Integer... trips) {
+        return getTrips(Arrays.asList(trips));
+    }
+    List<Trip> getTrips(List<Integer> trips);
+
+    Depot getDepot(String name);
+
+    BusStation getStation(String name);
+}

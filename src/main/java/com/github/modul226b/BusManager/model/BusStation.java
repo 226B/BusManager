@@ -1,5 +1,6 @@
 package com.github.modul226b.BusManager.model;
 
+import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -8,9 +9,9 @@ import java.util.List;
 @Getter
 public class BusStation {
     private String name;
-    private int locationId;
+    private Integer locationId;
     private String depotName;
-    private List<Integer> terminals;
+    private List<Integer> terminalIds;
 
     public BusStation(String name, Location location, Depot depot) {
         assert name != null : "name can not be null.";
@@ -20,19 +21,23 @@ public class BusStation {
         this.name = name;
         this.locationId = location.getId();
         this.depotName = depot.getName();
-        this.terminals = new ArrayList<>();
+        this.terminalIds = new ArrayList<>();
     }
 
-    public BusStation(String name, Depot depot, int x, int y) {
-        this(name, new Location(0,x, y), depot);
-    } //todo
+    public BusStation(String name, Depot depot, Integer x, Integer y) {
+        this(name, new Location(DataManager.getInstance().getNextLocationId(),x, y), depot);
+    }
 
     public Location getLocation() {
-        return null; // todo
+        return DataManager.getInstance().getLocation(this.locationId);
     }
 
     public Depot getDepot() {
-        return null; //todo
+        return DataManager.getInstance().getDepot(this.depotName);
+    }
+
+    public List<Terminal> getTerminals() {
+        return DataManager.getInstance().getTerminals(terminalIds);
     }
 
     @Override
@@ -45,6 +50,6 @@ public class BusStation {
         return this.name.equalsIgnoreCase(o2.name)
                 && this.getLocation().equals(o2.getLocation())
                 && this.getDepot().equals(o2.getDepot())
-                && this.terminals.equals(o2.terminals);
+                && this.terminalIds.equals(o2.terminalIds);
     }
 }

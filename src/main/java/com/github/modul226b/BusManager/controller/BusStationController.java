@@ -34,15 +34,15 @@ public class BusStationController {
         createMockData();
     }
 
-    private void createMockData() {
+    public void createMockData() {
         depots.put("Zürich", new Depot("Zürich"));
         depots.put("Bern", new Depot("Bern"));
         depots.put("Genf", new Depot("Genf"));
         depots.put("Luzern", new Depot("Luzern"));
 
-        stations.put("Zürich", new BusStation("Zürich", new Location(10, 20), depots.get("Zürich")));
-        stations.put("Bern", new BusStation("Bern", new Location(20, 100), depots.get("Bern")));
-        stations.put("Genf", new BusStation("Genf", new Location(-10, 50), depots.get("Genf")));
+        stations.put("Zürich", new BusStation("Zürich", new Location(1,10, 20), depots.get("Zürich")));
+        stations.put("Bern", new BusStation("Bern", new Location(2,20, 100), depots.get("Bern")));
+        stations.put("Genf", new BusStation("Genf", new Location(3,-10, 50), depots.get("Genf")));
 
         busTypes.put("klein", new BusType("klein", 20, 5, 100, 200));
         busTypes.put("mittel", new BusType("mittel", 50, 10, 200, 150));
@@ -178,7 +178,7 @@ public class BusStationController {
 
 
     @GetMapping("{station}/gate/get/{id}")
-    public Terminal getTerminal(@PathVariable(value = "station") String station, @PathVariable(value = "id") int id) {
+    public Terminal getTerminal(@PathVariable(value = "station") String station, @PathVariable(value = "id") Integer id) {
         for (Terminal terminal : stations.get(URLDecoder.decode(station, StandardCharsets.UTF_8)).getTerminals()) {
             if (terminal.getId() == id) {
                 return terminal;

@@ -1,5 +1,6 @@
 package com.github.modul226b.BusManager.model;
 
+import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -16,6 +17,10 @@ public class Depot {
 
         this.name = depotName;
         this.buses = new ArrayList<>();
+    }
+
+    public List<Bus> getBuses() {
+        return DataManager.getInstance().getBuses(buses);
     }
 
     @Override

@@ -5,9 +5,9 @@ import lombok.Getter;
 @Getter
 public class TerminalType {
     private String name;
-    private int capacity;
+    private Integer capacity;
 
-    public TerminalType(String name, int capacity) {
+    public TerminalType(String name, Integer capacity) {
         assert name != null : "name can not be null";
 
         this.name = name;
@@ -20,6 +20,6 @@ public class TerminalType {
             return false;
         }
         TerminalType o2 = (TerminalType) obj;
-        return this.name.equalsIgnoreCase(o2.name) && this.capacity == o2.capacity;
+        return this.name.equalsIgnoreCase(o2.name) && this.capacity.equals(o2.capacity);
     }
 }

@@ -1,5 +1,6 @@
 package com.github.modul226b.BusManager.model;
 
+import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
 @Getter
@@ -21,7 +22,7 @@ public class Bus {
     }
 
     public BusType getType() {
-        return null; //todo
+        return DataManager.getInstance().getBusType(this.typeName);
     }
 
     @Override

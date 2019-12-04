@@ -1,5 +1,6 @@
 package com.github.modul226b.BusManager.model;
 
+import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
 @Getter
@@ -8,10 +9,10 @@ public class Trip {
     private long startTime;
     private long arrivalTime;
     private String busName;
-    private int startId;
-    private int endId;
+    private Integer startId;
+    private Integer endId;
 
-    public Trip(int id, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
+    public Trip(Integer id, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
         assert bus != null : "bus can not be null";
         assert start != null : "start can not be null";
         assert end != null : "end can not be null";
@@ -24,14 +25,19 @@ public class Trip {
         this.endId = end.getId();
     }
 
+    public Trip(long startTime, long arrivalTime, Bus bus, Location start, Location end) {
+        this(DataManager.getInstance().getNextTripId(), startTime, arrivalTime, bus, start, end);
+    }
+
+
     public Bus getBus() {
-        return null; //todo
+        return DataManager.getInstance().getBus(this.busName);
     }
     public Location getStart() {
-        return null; //todo
+        return DataManager.getInstance().getLocation(this.startId);
     }
     public Location getEnd() {
-        return null; //todo
+        return DataManager.getInstance().getLocation(this.endId);
     }
 
     @Override

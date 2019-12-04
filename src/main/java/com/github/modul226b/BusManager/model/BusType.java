@@ -5,12 +5,12 @@ import lombok.Getter;
 @Getter
 public class BusType {
     private String name;
-    private int capacity;
-    private int recoveryTime;
-    private int maxRange;
+    private Integer capacity;
+    private Integer recoveryTime;
+    private Integer maxRange;
     private double distancePerH;
 
-    public BusType(String name, int capacity, int recoveryTime, int maxRange, int distancePerH) {
+    public BusType(String name, Integer capacity, Integer recoveryTime, Integer maxRange, Integer distancePerH) {
         assert name != null : "name can not be null";
 
         this.name = name;
@@ -28,9 +28,9 @@ public class BusType {
         BusType o2 = (BusType) obj;
 
         return this.name.equalsIgnoreCase(o2.name)
-                && this.capacity == o2.capacity
-                && this.recoveryTime == o2.recoveryTime
-                && this.maxRange == o2.maxRange
+                && this.capacity.equals(o2.capacity)
+                && this.recoveryTime.equals(o2.recoveryTime)
+                && this.maxRange.equals(o2.maxRange)
                 && this.distancePerH == o2.distancePerH;
     }
 }
