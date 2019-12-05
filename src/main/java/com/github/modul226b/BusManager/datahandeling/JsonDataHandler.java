@@ -139,12 +139,12 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public void addBus(Bus bus) {
-        dataHolder.getBuses().put(bus.getName(), bus);
+        dataHolder.getBuses().put(bus.getName().toLowerCase(), bus);
     }
 
     @Override
     public void addBusType(BusType type) {
-        dataHolder.getBusTypes().put(type.getName(), type);
+        dataHolder.getBusTypes().put(type.getName().toLowerCase(), type);
     }
 
     @Override
@@ -154,7 +154,7 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public void addTerminalType(TerminalType type) {
-        dataHolder.getTerminalTypes().put(type.getName(), type);
+        dataHolder.getTerminalTypes().put(type.getName().toLowerCase(), type);
     }
 
     @Override
@@ -169,11 +169,11 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public void addDepot(Depot depot) {
-        dataHolder.getDepots().put(depot.getName(), depot);
+        dataHolder.getDepots().put(depot.getName().toLowerCase(), depot);
     }
 
     @Override
     public void addStation(BusStation station) {
-        dataHolder.getStations().put(station.getName(), station);
+        dataHolder.getStations().put(station.getName().toLowerCase(), station);
     }
 }

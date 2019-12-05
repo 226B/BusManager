@@ -34,7 +34,7 @@ public class BusController {
 
     @GetMapping("get/{busName}")
     public BusDao getBus(@PathVariable String busName) {
-        BusDao bus = BusDao.ToDao(DataManager.getInstance().getBus(busName));
+        BusDao bus = BusDao.ToDao(DataManager.getInstance().getBus(busName.toLowerCase()));
 
         if (bus == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bus mit dem namen " + busName + " nicht gefunden.");
@@ -67,7 +67,7 @@ public class BusController {
 
     @GetMapping("type/get/{typeName}")
     public BusType getBusType(@PathVariable String typeName) {
-        BusType type = DataManager.getInstance().getBusType(typeName);
+        BusType type = DataManager.getInstance().getBusType(typeName.toLowerCase());
 
         if (type == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BusType mit dem namen " + typeName + " nicht gefunden.");
