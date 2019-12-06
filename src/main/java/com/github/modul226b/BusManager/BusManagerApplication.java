@@ -27,9 +27,9 @@ public class BusManagerApplication {
         DataManager.getInstance().addStation(new BusStation("Bern", DataManager.getInstance().getLocation(1), DataManager.getInstance().getDepot("Bern")));
         DataManager.getInstance().addStation(new BusStation("Genf", DataManager.getInstance().getLocation(2), DataManager.getInstance().getDepot("Genf")));
 
-        DataManager.getInstance().addBusType(new BusType("klein", 20, 5, 100, 200));
-        DataManager.getInstance().addBusType(new BusType("mittel", 50, 10, 200, 150));
-        DataManager.getInstance().addBusType(new BusType("gross", 100, 20, 1000, 100));
+        DataManager.getInstance().addBusType(new BusType("klein", 20, 5, 100, 200.0));
+        DataManager.getInstance().addBusType(new BusType("mittel", 50, 10, 200, 150.0));
+        DataManager.getInstance().addBusType(new BusType("gross", 100, 20, 1000, 100.0));
 
         DataManager.getInstance().addBus(new Bus("ZH01", DataManager.getInstance().getBusType("klein")));
         DataManager.getInstance().addBus(new Bus("ZH02", DataManager.getInstance().getBusType("klein")));

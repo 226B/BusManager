@@ -8,9 +8,9 @@ public class BusType {
     private Integer capacity;
     private Integer recoveryTime;
     private Integer maxRange;
-    private double distancePerH;
+    private Double distancePerH;
 
-    public BusType(String name, Integer capacity, Integer recoveryTime, Integer maxRange, Integer distancePerH) {
+    public BusType(String name, Integer capacity, Integer recoveryTime, Integer maxRange, Double distancePerH) {
         assert name != null : "name can not be null";
 
         this.name = name;
