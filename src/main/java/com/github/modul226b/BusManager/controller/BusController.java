@@ -1,6 +1,6 @@
 package com.github.modul226b.BusManager.controller;
 
-import com.github.modul226b.BusManager.controller.daos.BusDao;
+import com.github.modul226b.BusManager.dtos.BusDto;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.model.Bus;
 import com.github.modul226b.BusManager.model.BusType;
@@ -17,14 +17,14 @@ import java.util.List;
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
 public class BusController {
     @GetMapping("get/")
-    public List<BusDao> getAllBuses() {
-        List<BusDao> daos = new ArrayList<>();
+    public List<BusDto> getAllBuses() {
+        List<BusDto> daos = new ArrayList<>();
         for (Bus bus : DataManager.getInstance().getBuses()) {
-            daos.add(BusDao.ToDao(bus));
+            daos.add(BusDto.ToDao(bus));
         }
 
-        Comparator<BusDao> comparing = Comparator.comparing(o -> o.getType().getName());
-        comparing = comparing.thenComparing(BusDao::getName);
+        Comparator<BusDto> comparing = Comparator.comparing(o -> o.getType().getName());
+        comparing = comparing.thenComparing(BusDto::getName);
 
         daos.sort(
                 comparing
@@ -33,8 +33,8 @@ public class BusController {
     }
 
     @GetMapping("get/{busName}")
-    public BusDao getBus(@PathVariable String busName) {
-        BusDao bus = BusDao.ToDao(DataManager.getInstance().getBus(busName.toLowerCase()));
+    public BusDto getBus(@PathVariable String busName) {
+        BusDto bus = BusDto.ToDao(DataManager.getInstance().getBus(busName.toLowerCase()));
 
         if (bus == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bus mit dem namen " + busName + " nicht gefunden.");
@@ -44,7 +44,7 @@ public class BusController {
     }
 
     @PostMapping("add")
-    public void addBus(@RequestBody BusDao bus, @RequestParam(required = false) Boolean override) {
+    public void addBus(@RequestBody BusDto bus, @RequestParam(required = false) Boolean override) {
         if (override == null) {
             override = false;
         }

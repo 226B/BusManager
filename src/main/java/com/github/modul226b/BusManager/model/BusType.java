@@ -31,6 +31,6 @@ public class BusType {
                 && this.capacity.equals(o2.capacity)
                 && this.recoveryTime.equals(o2.recoveryTime)
                 && this.maxRange.equals(o2.maxRange)
-                && this.distancePerH == o2.distancePerH;
+                && this.distancePerH.equals(o2.distancePerH);
     }
 }

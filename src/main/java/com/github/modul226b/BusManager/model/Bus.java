@@ -25,6 +25,9 @@ public class Bus {
 
     public void setType(BusType type) {
         assert type != null : "type can not be null";
+        DataManager instance = DataManager.getInstance();
+        assert instance.getBusType(type.getName()) != null : "type must be registered.";
+
         this.typeName = type.getName();
     }
 
