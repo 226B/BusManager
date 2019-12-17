@@ -176,4 +176,22 @@ public class JsonDataHandler implements IDataHandler {
     public void addStation(BusStation station) {
         dataHolder.getStations().put(station.getName().toLowerCase(), station);
     }
+
+    @Override
+    public void removeBusType(String typeName) {
+        BusType busType = this.getBusType(typeName);
+
+        assert busType != null : "BusType can not be null.";
+
+        dataHolder.getBusTypes().remove(typeName);
+    }
+
+    @Override
+    public void removeBus(String busName) {
+        Bus bus = this.getBus(busName);
+
+        assert bus != null : "Bus can not be null.";
+
+        dataHolder.getBusTypes().remove(busName);
+    }
 }

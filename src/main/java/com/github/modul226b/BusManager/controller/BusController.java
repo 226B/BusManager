@@ -88,4 +88,26 @@ public class BusController {
 
         DataManager.getInstance().addBusType(busType);
     }
+
+    @DeleteMapping("type/remove/{type}")
+    public void deleteBusType(@PathVariable("type") String typeName) {
+        DataManager instance = DataManager.getInstance();
+
+        if (instance.getBusType(typeName) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Der Type mit dem Namen " + typeName + " wurde nicht gefunden.");
+        }
+
+        DataManager.getInstance().removeBusType(typeName);
+    }
+
+    @DeleteMapping("remove/{bus}")
+    public void deleteBus(@PathVariable("bus") String bus) {
+        DataManager instance = DataManager.getInstance();
+
+        if (instance.getBusType(bus) == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Der Bus mit dem Namen " + bus + " wurde nicht gefunden.");
+        }
+
+        DataManager.getInstance().removeBusType(bus);
+    }
 }

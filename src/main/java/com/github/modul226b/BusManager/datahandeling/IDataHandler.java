@@ -65,4 +65,8 @@ public interface IDataHandler {
     void addDepot(Depot depot);
 
     void addStation(BusStation station);
+
+    void removeBusType(String typeName);
+
+    void removeBus(String busName);
 }
