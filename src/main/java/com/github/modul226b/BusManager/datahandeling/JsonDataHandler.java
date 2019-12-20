@@ -194,4 +194,24 @@ public class JsonDataHandler implements IDataHandler {
 
         dataHolder.getBusTypes().remove(busName);
     }
+
+    @Override
+    public BusStation getStation(int locationId) {
+        for (BusStation value : dataHolder.getStations().values()) {
+            if (value.getLocationId() == locationId) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Terminal getTerminalByTripId(int tripId, int locationId) {
+        for (Terminal t: this.getStation(locationId).getTerminals()) {
+            if (t.getId() == tripId) {
+                return t;
+            }
+        }
+        return null;
+    }
 }

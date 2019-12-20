@@ -50,6 +50,10 @@ public interface IDataHandler {
 
     BusStation getStation(String name);
 
+    BusStation getStation(int locationId);
+
+    Terminal getTerminalByTripId(int tripId, int locationId);
+
     void addBus(Bus bus);
 
     void addBusType(BusType type);
