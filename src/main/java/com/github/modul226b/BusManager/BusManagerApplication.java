@@ -5,12 +5,14 @@ import com.github.modul226b.BusManager.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.time.LocalDateTime;
+
 @SpringBootApplication
 public class BusManagerApplication {
 
     public static void main(String[] args) {
-
         //createMockData();
+        //createMockTrips();
         SpringApplication.run(BusManagerApplication.class, args);
     }
 
@@ -112,6 +114,31 @@ public class BusManagerApplication {
         DataManager.getInstance().getStation("Genf").addTerminal(9);
         DataManager.getInstance().getStation("Genf").addTerminal(10);
         DataManager.getInstance().getStation("Genf").addTerminal(11);
+    }
+
+    public static void createMockTrips() {
+        DataManager.getInstance().addTrip(
+                new Trip(
+                        1,
+                        LocalDateTime.parse("2007-12-03T20:00:00"),
+                        LocalDateTime.parse("2007-12-03T21:00:00"),
+                        DataManager.getInstance().getBus("ZH01"),
+                        DataManager.getInstance().getStation("Zürich"),
+                        DataManager.getInstance().getStation("Bern")
+                )
+        );
+
+
+        DataManager.getInstance().addTrip(
+                new Trip(
+                        2,
+                        LocalDateTime.parse("2008-12-03T10:00:00"),
+                        LocalDateTime.parse("2008-12-03T11:00:00"),
+                        DataManager.getInstance().getBus("ZH01"),
+                        DataManager.getInstance().getStation("Zürich"),
+                        DataManager.getInstance().getStation("Bern")
+                )
+        );
     }
 
 }

@@ -12,14 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/trip")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
+@RequestMapping("/api/v1/trip/")
+@CrossOrigin(origins = {"*"})
 public class TripController {
-    @GetMapping()
+    @GetMapping("get")
     public List<TripDto> getTripList () {
         List<TripDto> dtoList = new ArrayList<TripDto>();
-        DataManager.getInstance().getTrips().forEach(trip -> {
-            dtoList.add(new TripDto(trip));
+        DataManager.getInstance().getAllTrips().forEach(trip -> {
+            dtoList.add(TripDto.toDto(trip));
         });
+        return dtoList;
     }
 }

@@ -40,6 +40,8 @@ public interface IDataHandler {
 
     Integer getNextTripId();
 
+    List<Trip> getAllTrips();
+
     default List<Trip> getTrips(Integer... trips) {
         return getTrips(Arrays.asList(trips));
     }

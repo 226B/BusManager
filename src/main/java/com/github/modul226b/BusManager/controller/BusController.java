@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/bus/")
-@CrossOrigin(origins = {"http://localhost:4200", "http://localhost:8080"})
+@CrossOrigin(origins = {"*"})
 public class BusController {
     @GetMapping("get/")
     public List<BusDto> getAllBuses() {

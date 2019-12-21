@@ -119,6 +119,11 @@ public class JsonDataHandler implements IDataHandler {
     }
 
     @Override
+    public List<Trip> getAllTrips() {
+        return new ArrayList<>(dataHolder.getTrips().values());
+    }
+
+    @Override
     public List<Trip> getTrips(List<Integer> trips) {
         List<Trip> result = new ArrayList<>();
         for (Integer trip : trips) {

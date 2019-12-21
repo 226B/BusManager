@@ -267,5 +267,22 @@
       "y": 50
     }
   },
-  "trips": {}
+  "trips": {
+    "1": {
+      "id": 1,
+      "startTime": 1196708400,
+      "arrivalTime": 1196712000,
+      "busName": "ZH01",
+      "startId": 0,
+      "endId": 1
+    },
+    "2": {
+      "id": 2,
+      "startTime": 1228294800,
+      "arrivalTime": 1228298400,
+      "busName": "ZH01",
+      "startId": 0,
+      "endId": 1
+    }
+  }
 }

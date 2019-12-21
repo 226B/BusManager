@@ -3,6 +3,8 @@ package com.github.modul226b.BusManager.model;
 import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
+import java.time.*;
+
 @Getter
 public class Trip {
     private Integer id;
@@ -11,6 +13,10 @@ public class Trip {
     private String busName;
     private Integer startId;
     private Integer endId;
+
+    public Trip(Integer id, LocalDateTime start, LocalDateTime arrivalTime, Bus bus, BusStation startStation, BusStation endStation) {
+        this(id,  start.atZone(ZoneId.systemDefault()).toEpochSecond(), arrivalTime.atZone(ZoneId.systemDefault()).toEpochSecond(), bus, startStation.getLocation(), endStation.getLocation());
+    }
 
     public Trip(Integer id, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
         assert bus != null : "bus can not be null";
@@ -22,7 +28,10 @@ public class Trip {
         assert instance.getBus(bus.getName()) != null : "bus must be registered.";
         assert instance.getLocation(start.getId()) != null : "start Location must be registered.";
         assert instance.getLocation(end.getId()) != null : "end Location must be registered.";
+        assert instance.getStation(start.getId()) != null : "start must be a BusStation";
+        assert instance.getStation(end.getId()) != null : "end must be a BusStation";
 
+        assert startTime < arrivalTime : "start must be before end.";
 
         this.id = id;
         this.startTime = startTime;

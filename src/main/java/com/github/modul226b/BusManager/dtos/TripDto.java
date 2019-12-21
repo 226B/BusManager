@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
@@ -15,8 +16,8 @@ import java.time.ZoneId;
 public class TripDto {
     private String startLocationName;
     private String arrivalLocationName;
-    private LocalDate startTime;
-    private LocalDate arrivalTime;
+    private LocalDateTime startTime;
+    private LocalDateTime arrivalTime;
     private String startTerminal;
     private String arrivalTerminal;
     private String busType;
@@ -25,15 +26,20 @@ public class TripDto {
         if (trip == null)  {
             return null;
         }
+        LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochMilli(trip.getStartTime()), ZoneId.systemDefault());
+        LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(trip.getArrivalTime()), ZoneId.systemDefault());
 
+        String displayName = DataManager.getInstance().getTerminalByTripId(trip.getId(), trip.getStartId()).getDisplayName();
+        String displayName1 = DataManager.getInstance().getTerminalByTripId(trip.getId(), trip.getEndId()).getDisplayName();
+        String typeName = DataManager.getInstance().getBus(trip.getBusName()).getTypeName();
         return new TripDto(
                 DataManager.getInstance().getStation(trip.getStartId()).getName(),
                 DataManager.getInstance().getStation(trip.getEndId()).getName(),
-                Instant.ofEpochMilli(trip.getStartTime()).atZone(ZoneId.systemDefault()).toLocalDate(),
-                Instant.ofEpochMilli(trip.getArrivalTime()).atZone(ZoneId.systemDefault()).toLocalDate(),
-                DataManager.getInstance().getTerminalByTripId(trip.getId(), trip.getStartId()).getDisplayName(),
-                DataManager.getInstance().getTerminalByTripId(trip.getId(), trip.getEndId()).getDisplayName(),
-                DataManager.getInstance().getBus(trip.getBusName()).getTypeName()
+                start,
+                end,
+                displayName,
+                displayName1,
+                typeName
         );
     }
 }
