@@ -139,6 +139,15 @@ public class BusManagerApplication {
                         DataManager.getInstance().getStation("Bern")
                 )
         );
+
+        Integer zürich = DataManager.getInstance().getStation("Zürich").getTerminalIds().get(0);
+        Integer bern = DataManager.getInstance().getStation("Bern").getTerminalIds().get(0);
+
+        DataManager.getInstance().getTerminal(zürich).getTripIds().add(1);
+        DataManager.getInstance().getTerminal(zürich).getTripIds().add(2);
+
+        DataManager.getInstance().getTerminal(bern).getTripIds().add(1);
+        DataManager.getInstance().getTerminal(bern).getTripIds().add(2);
     }
 
 }

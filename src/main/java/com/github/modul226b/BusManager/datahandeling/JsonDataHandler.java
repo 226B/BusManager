@@ -213,7 +213,8 @@ public class JsonDataHandler implements IDataHandler {
     @Override
     public Terminal getTerminalByTripId(int tripId, int locationId) {
         for (Terminal t: this.getStation(locationId).getTerminals()) {
-            if (t.getId() == tripId) {
+
+            if (t.getTripIds().contains(tripId)) {
                 return t;
             }
         }

@@ -1,6 +1,7 @@
 package com.github.modul226b.BusManager.dtos;
 
 import com.github.modul226b.BusManager.manager.DataManager;
+import com.github.modul226b.BusManager.model.Terminal;
 import com.github.modul226b.BusManager.model.Trip;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,7 +30,10 @@ public class TripDto {
         LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochMilli(trip.getStartTime()), ZoneId.systemDefault());
         LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(trip.getArrivalTime()), ZoneId.systemDefault());
 
-        String displayName = DataManager.getInstance().getTerminalByTripId(trip.getId(), trip.getStartId()).getDisplayName();
+        Integer id = trip.getId();
+        Integer startId = trip.getStartId();
+        Terminal terminalByTripId = DataManager.getInstance().getTerminalByTripId(id, startId);
+        String displayName = terminalByTripId.getDisplayName();
         String displayName1 = DataManager.getInstance().getTerminalByTripId(trip.getId(), trip.getEndId()).getDisplayName();
         String typeName = DataManager.getInstance().getBus(trip.getBusName()).getTypeName();
         return new TripDto(
