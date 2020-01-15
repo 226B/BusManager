@@ -134,7 +134,7 @@ public class JsonDataHandler implements IDataHandler {
 
     @Override
     public Depot getDepot(String name) {
-        return dataHolder.getDepots().getOrDefault(name, null);
+        return dataHolder.getDepots().getOrDefault(name.toLowerCase(), null);
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.github.modul226b.BusManager.manager;
 
-import com.github.modul226b.BusManager.dtos.CreateTripDto;
 import com.github.modul226b.BusManager.model.*;
 
 import java.time.LocalDateTime;
@@ -29,16 +28,15 @@ public class TripManager {
     }
 
     public LocalDateTime getArrivalTime(LocalDateTime startTime, BusType busType, BusStation start, BusStation end) {
-        double distance = Math.sqrt(
-                Math.pow(start.getLocation().getX() - end.getLocation().getX(), 2)
-                        +
-                Math.pow(start.getLocation().getY() - end.getLocation().getY(), 2)
-        );
+        Location location = start.getLocation();
+        Location location1 = end.getLocation();
+        double pow = Math.pow(location.getX() - location1.getX(), 2);
+        double pow1 = Math.pow(start.getLocation().getY() - end.getLocation().getY(), 2);
+        double distance = Math.sqrt(pow + pow1);
 
-        double time = distance / busType.getDistancePerH() * 60;
-        System.out.println(time);
+        long time = Math.round(distance / busType.getDistancePerH() * 60 * 60 + 0.5);
 
-        return null; //todo implement
+        return startTime.plusSeconds(time);
     }
 
     public List<Terminal> getFreeTerminals(BusType type, BusStation station, LocalDateTime time) {
@@ -61,7 +59,7 @@ public class TripManager {
                         valid = false;
                         break;
                     }
-                }else {
+                } else {
                     throw new IllegalArgumentException("station contains terminals that do not contain the station as the start or end location.");
                 }
             }

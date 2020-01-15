@@ -57,7 +57,7 @@ public class TripController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freier Bus in "+ start.getName() +" gefunden.");
         }
 
-        LocalDateTime arrivalTime = TripManager.getInstance().getArrivalTime(createTripDto.getTime(), bus, start, end);
+        LocalDateTime arrivalTime = TripManager.getInstance().getArrivalTime(createTripDto.getTime(), bus.getType(), start, end);
 
         if (arrivalTime == null) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Fehler beim berechnen der Ankunftszeit.");
