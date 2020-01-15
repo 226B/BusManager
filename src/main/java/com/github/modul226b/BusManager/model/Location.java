@@ -4,7 +4,7 @@ import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
 @Getter
-public class Location {
+public class Location implements IValidatable {
     private Integer id;
     private Integer x;
     private Integer y;

@@ -3,7 +3,7 @@ package com.github.modul226b.BusManager.model;
 import lombok.Getter;
 
 @Getter
-public class BusType {
+public class BusType implements IValidatable {
     private String name;
     private Integer capacity;
     private Integer recoveryTime;

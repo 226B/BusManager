@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Getter
-public class Depot {
+public class Depot implements IValidatable {
     private String name;
     private List<String> busNames;
 

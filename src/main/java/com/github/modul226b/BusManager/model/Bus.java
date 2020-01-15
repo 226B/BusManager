@@ -4,7 +4,7 @@ import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
 @Getter
-public class Bus {
+public class Bus implements IValidatable {
     private String name;
     private String typeName;
 

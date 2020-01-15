@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.*;
 
 @Getter
-public class Trip {
+public class Trip implements IValidatable {
     private Integer id;
     private long startTime;
     private long arrivalTime;

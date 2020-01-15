@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class Terminal {
+public class Terminal implements IValidatable {
     Integer id;
     String displayName;
     String typeName;

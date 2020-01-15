@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class BusStation {
+public class BusStation implements IValidatable {
     private String name;
     private Integer locationId;
     private String depotName;
