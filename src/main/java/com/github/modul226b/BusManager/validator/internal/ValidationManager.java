@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class ValidationManager{
+public class            ValidationManager{
     private static ValidationManager instance;
 
     public static ValidationManager getInstance() {
@@ -39,7 +39,20 @@ public class ValidationManager{
     }
 
     public List<ValidationResult> validate() {
+        List<ValidationResult> results = new ArrayList<>();
+        for (Validator<?> validator : validatorList) {
+            this.validate(results, validator);
+        }
+        return results;
+    }
+
+    private void validate(List<ValidationResult> results, Validator<?> validator) {
         //todo
-        return null;
+    }
+
+    public List<ValidationResult> validate(Validator<?> validator) {
+        ArrayList<ValidationResult> results = new ArrayList<>();
+        this.validate(results, validator);
+        return results;
     }
 }
