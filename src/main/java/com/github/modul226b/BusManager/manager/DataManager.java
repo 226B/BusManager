@@ -19,6 +19,10 @@ public class DataManager {
         dataHandler = new JsonDataHandler("data.json");
     }
 
+    public static void setInstance(IDataHandler handler) {
+        instance = new DataManager(handler);
+    }
+
     public static DataManager getInstance() {
         if (instance == null) {
             instance = new DataManager();

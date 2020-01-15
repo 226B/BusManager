@@ -1,5 +1,6 @@
 package com.github.modul226b.BusManager;
 
+import com.github.modul226b.BusManager.datahandeling.MockDataHandler;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.manager.TripManager;
 import com.github.modul226b.BusManager.model.BusStation;
@@ -11,10 +12,12 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-public class caculateDistanceTests {
+public class CaculateDistanceTests {
     @Test
     public void test() {
         //ARRANGE
+        DataManager.setInstance(new MockDataHandler());
+
         Location location = new Location(100, 100);
         DataManager.getInstance().addLocation(location);
         Location location1 = new Location(200, 200);

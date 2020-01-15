@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidationResult {
-    Validation validation;
+    ValidationState validation;
     String message;
 
-    public static ValidationResult get(Validation validation, String message) {
+    public static ValidationResult create(ValidationState validation, String message) {
         return new ValidationResult(validation, message);
     }
 }
