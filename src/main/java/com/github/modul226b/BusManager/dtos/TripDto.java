@@ -1,5 +1,6 @@
 package com.github.modul226b.BusManager.dtos;
 
+import com.github.modul226b.BusManager.helpers.TimeHelper;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.model.Terminal;
 import com.github.modul226b.BusManager.model.Trip;
@@ -27,8 +28,8 @@ public class TripDto {
         if (trip == null)  {
             return null;
         }
-        LocalDateTime start = LocalDateTime.ofInstant(Instant.ofEpochMilli(trip.getStartTime()), ZoneId.systemDefault());
-        LocalDateTime end = LocalDateTime.ofInstant(Instant.ofEpochMilli(trip.getArrivalTime()), ZoneId.systemDefault());
+        LocalDateTime start = TimeHelper.toLocalDateTime(trip.getStartTime());
+        LocalDateTime end = TimeHelper.toLocalDateTime(trip.getArrivalTime());
 
         Integer id = trip.getId();
         Integer startId = trip.getStartId();

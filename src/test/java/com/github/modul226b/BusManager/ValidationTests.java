@@ -4,7 +4,7 @@ package com.github.modul226b.BusManager;
 import com.github.modul226b.BusManager.datahandeling.MockDataHandler;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.model.Location;
-import com.github.modul226b.BusManager.validator.internal.ValidationManager;
+import com.github.modul226b.BusManager.manager.ValidationManager;
 import com.github.modul226b.BusManager.validator.internal.ValidationResult;
 import com.github.modul226b.BusManager.validator.internal.ValidationState;
 import com.github.modul226b.BusManager.validator.validators.NullValidator;

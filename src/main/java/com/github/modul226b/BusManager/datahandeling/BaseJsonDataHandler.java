@@ -20,6 +20,20 @@ public class BaseJsonDataHandler implements IDataHandler {
     }
 
     @Override
+    public List<IValidatable> getAllObjects() {
+        List<IValidatable> result = new ArrayList<>();
+        result.addAll(dataHolder.getTrips().values());
+        result.addAll(dataHolder.getBuses().values());
+        result.addAll(dataHolder.getDepots().values());
+        result.addAll(dataHolder.getBusTypes().values());
+        result.addAll(dataHolder.getStations().values());
+        result.addAll(dataHolder.getTerminals().values());
+        result.addAll(dataHolder.getLocations().values());
+        result.addAll(dataHolder.getTerminalTypes().values());
+        return result;
+    }
+
+    @Override
     public Bus getBus(String name) {
         return dataHolder.getBuses().getOrDefault(name, null);
     }

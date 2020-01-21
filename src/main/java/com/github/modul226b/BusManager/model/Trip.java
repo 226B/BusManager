@@ -1,9 +1,12 @@
 package com.github.modul226b.BusManager.model;
 
+import com.github.modul226b.BusManager.helpers.TimeHelper;
 import com.github.modul226b.BusManager.manager.DataManager;
+import com.github.modul226b.BusManager.manager.TripManager;
 import lombok.Getter;
 
-import java.time.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 public class Trip implements IValidatable {
@@ -15,10 +18,20 @@ public class Trip implements IValidatable {
     private Integer endId;
 
     public Trip(Integer id, LocalDateTime start, LocalDateTime arrivalTime, Bus bus, BusStation startStation, BusStation endStation) {
-        this(id,  start.atZone(ZoneId.systemDefault()).toEpochSecond(), arrivalTime.atZone(ZoneId.systemDefault()).toEpochSecond(), bus, startStation.getLocation(), endStation.getLocation());
+        this(
+                id,
+                TimeHelper.toLong(start),
+                TimeHelper.toLong(arrivalTime),
+                bus,
+                startStation.getLocation(),
+                endStation.getLocation()
+        );
+    }
+    public Trip(LocalDateTime start, LocalDateTime arrivalTime, Bus bus, BusStation startStation, BusStation endStation) {
+        this(DataManager.getInstance().getNextTripId(), start, arrivalTime, bus, startStation, endStation);
     }
 
-    public Trip(Integer id, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
+    private Trip(Integer id, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
         assert bus != null : "bus can not be null";
         assert start != null : "start can not be null";
         assert end != null : "end can not be null";
@@ -41,7 +54,7 @@ public class Trip implements IValidatable {
         this.endId = end.getId();
     }
 
-    public Trip(long startTime, long arrivalTime, Bus bus, Location start, Location end) {
+    private Trip(long startTime, long arrivalTime, Bus bus, Location start, Location end) {
         this(DataManager.getInstance().getNextTripId(), startTime, arrivalTime, bus, start, end);
     }
 

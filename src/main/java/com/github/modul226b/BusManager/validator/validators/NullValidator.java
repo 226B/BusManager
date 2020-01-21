@@ -16,7 +16,7 @@ public class NullValidator extends Validator<IValidatable> {
     }
 
     @Override
-    public Class<?> getType() {
+    public Class<? extends IValidatable> getType() {
         return IValidatable.class;
     }
 }

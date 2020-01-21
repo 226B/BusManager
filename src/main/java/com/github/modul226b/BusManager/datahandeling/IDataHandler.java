@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public interface IDataHandler {
+
+    List<IValidatable> getAllObjects();
+
     Bus getBus(String name);
 
     default List<Bus> getBuses(String... buses) {
