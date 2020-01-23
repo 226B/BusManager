@@ -57,21 +57,34 @@ public class BusMoverServiceTests {
         bern.addTerminal(beTerminal2.getId());
 
 
-        LocalDateTime time = LocalDateTime.of(2020, 1, 1, 12, 0, 0);
-        LocalDateTime arrivalTime = TripManager.getInstance().getArrivalTime(time, klein, zürich, bern);
-        Trip trip = new Trip(
+        LocalDateTime trip1Time = LocalDateTime.of(2020, 1, 1, 12, 0, 0);
+        LocalDateTime trip1ArrivalTime = TripManager.getInstance().getArrivalTime(trip1Time, klein, zürich, bern);
+        Trip trip1 = new Trip(
                 0,
-                time,
-                arrivalTime,
+                trip1Time,
+                trip1ArrivalTime,
                 test1,
                 zürich,
                 bern
         );
+        DataManager.getInstance().getTerminal(zhTerminal1.getId()).getTripIds().add(trip1.getId());
+        DataManager.getInstance().getTerminal(beTerminal1.getId()).getTripIds().add(trip1.getId());
 
-        DataManager.getInstance().getTerminal(zhTerminal1.getId()).getTripIds().add(trip.getId());
-        DataManager.getInstance().getTerminal(beTerminal1.getId()).getTripIds().add(trip.getId());
+        LocalDateTime trip2Time = LocalDateTime.of(2020, 1, 1, 20, 0, 0);
+        LocalDateTime trip2ArrivalTime = TripManager.getInstance().getArrivalTime(trip2Time, klein, bern, zürich);
+        Trip trip2 = new Trip(
+                1,
+                trip2Time,
+                trip2ArrivalTime,
+                test1,
+                bern,
+                zürich
+        );
+        DataManager.getInstance().getTerminal(zhTerminal1.getId()).getTripIds().add(trip2.getId());
+        DataManager.getInstance().getTerminal(beTerminal1.getId()).getTripIds().add(trip2.getId());
 
-        DataManager.getInstance().addTrip(trip);
+        DataManager.getInstance().addTrip(trip1);
+        DataManager.getInstance().addTrip(trip2);
     }
 
     @Test

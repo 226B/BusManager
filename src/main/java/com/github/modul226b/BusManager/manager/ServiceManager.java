@@ -29,6 +29,10 @@ public class ServiceManager {
         }
     }
 
+    private void addService(AbstractService service) {
+        serviceHashMap.put(service.getClass(), service);
+    }
+
     private List<AbstractService> loadServices() {
         List<AbstractService> result = new ArrayList<>();
 
