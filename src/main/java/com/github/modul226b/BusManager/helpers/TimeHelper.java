@@ -3,13 +3,17 @@ package com.github.modul226b.BusManager.helpers;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 public class TimeHelper {
     public static long toLong(LocalDateTime time) {
-        return time.atZone(ZoneId.systemDefault()).toEpochSecond();
+        ZonedDateTime zdt = ZonedDateTime.of(time, ZoneId.systemDefault());
+        return zdt.toInstant().toEpochMilli();
     }
 
     public static LocalDateTime toLocalDateTime(long time) {
-        return LocalDateTime.ofInstant(Instant.ofEpochMilli(time), ZoneId.systemDefault());
+        Instant instant = Instant.ofEpochMilli(time);
+        LocalDateTime date = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
+        return date;
     }
 }

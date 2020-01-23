@@ -1,5 +1,6 @@
 package com.github.modul226b.BusManager.service.services;
 
+import com.github.modul226b.BusManager.helpers.TimeHelper;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.model.Bus;
 import com.github.modul226b.BusManager.model.Trip;
@@ -32,14 +33,15 @@ public class BusMoverService extends AbstractService {
             if (!map.containsKey(trip.getBus())) {
                 map.put(trip.getBus(), new ArrayList<>());
             }
-            map.get(trip.getBus()).add(trip);
+            Bus bus = trip.getBus();
+            map.get(bus).add(trip);
         }
 
-        map.forEach((bus, trips) -> {
-            System.out.println(bus.getName());
-            for (Trip trip : trips) {
-                System.out.println(trip.getArrivalTime());
+        for (Bus bus : map.keySet()) {
+            System.out.println("bus:" + bus.getName());
+            for (Trip trip : map.get(bus)) {
+                System.out.println(TimeHelper.toLocalDateTime(trip.getArrivalTime()));
             }
-        });
+        }
     }
 }
