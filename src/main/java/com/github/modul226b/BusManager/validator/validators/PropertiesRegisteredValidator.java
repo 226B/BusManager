@@ -6,9 +6,9 @@ import com.github.modul226b.BusManager.manager.TripManager;
 import com.github.modul226b.BusManager.model.*;
 import com.github.modul226b.BusManager.validator.internal.ValidationResult;
 import com.github.modul226b.BusManager.validator.internal.ValidationState;
-import com.github.modul226b.BusManager.validator.internal.Validator;
+import com.github.modul226b.BusManager.validator.internal.AbstractValidator;
 
-public class PropertiesRegisteredValidator extends Validator<IValidatable> {
+public class PropertiesRegisteredValidator extends AbstractValidator<IValidatable> {
 
     public PropertiesRegisteredValidator(DataManager dataManager, BusManager busManager, TripManager tripManager) {
         super(dataManager, busManager, tripManager);

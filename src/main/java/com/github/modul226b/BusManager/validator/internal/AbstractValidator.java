@@ -7,12 +7,12 @@ import com.github.modul226b.BusManager.model.IValidatable;
 import lombok.Getter;
 
 @Getter
-public abstract class Validator<V extends IValidatable> {
+public abstract class AbstractValidator<V extends IValidatable> {
     private DataManager dataManager;
     private BusManager busManager;
     private TripManager tripManager;
 
-    public Validator(DataManager dataManager, BusManager busManager, TripManager tripManager) {
+    public AbstractValidator(DataManager dataManager, BusManager busManager, TripManager tripManager) {
         this.dataManager = dataManager;
         this.busManager = busManager;
         this.tripManager = tripManager;
