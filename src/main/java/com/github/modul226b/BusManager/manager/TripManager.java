@@ -1,32 +1,26 @@
 package com.github.modul226b.BusManager.manager;
 
-import com.github.modul226b.BusManager.dtos.TripDto;
 import com.github.modul226b.BusManager.helpers.TimeHelper;
 import com.github.modul226b.BusManager.model.*;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TripManager {
+    private DataManager dataManager;
+    private BusManager busManager;
 
-    private static TripManager instance;
-
-    public static TripManager getInstance() {
-        if (instance == null) {
-            instance = new TripManager();
-        }
-
-        return instance;
+    public TripManager(DataManager dataManager, BusManager busManager) {
+        this.dataManager = dataManager;
+        this.busManager = busManager;
     }
 
     public Trip addTrip(String startStation, int capacity, String endStation, LocalDateTime time) throws ResponseStatusException {
-        BusStation start = DataManager.getInstance().getStation(startStation);
-        BusStation end = DataManager.getInstance().getStation(endStation);
+        BusStation start = dataManager.getDataHandler().getStation(startStation);
+        BusStation end = dataManager.getDataHandler().getStation(endStation);
 
         if (start == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Start station existiert nicht.");
@@ -35,31 +29,31 @@ public class TripManager {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Endstation existiert nicht.");
         }
 
-        for (Trip trip : DataManager.getInstance().getAllTrips()) {
+        for (Trip trip : dataManager.getDataHandler().getAllTrips()) {
             if (trip.getStartTime() == TimeHelper.toLong(time)) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Es exisitert bereits eine Fahrt zu dieser Zeit.");
             }
         }
 
-        Bus bus = BusManager.getInstance().getFreeBus(time, capacity, start);
+        Bus bus = busManager.getFreeBus(time, capacity, start);
 
         if (bus == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freier Bus in "+ start.getName() +" gefunden.");
         }
 
-        LocalDateTime arrivalTime = TripManager.getInstance().getArrivalTime(time, bus.getType(), start, end);
+        LocalDateTime arrivalTime = this.getArrivalTime(time, bus.getType(), start, end);
 
         if (arrivalTime == null) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Fehler beim berechnen der Ankunftszeit.");
         }
 
-        Terminal startTerminal = TripManager.getInstance().getFreeTerminals(bus.getType(), start, time).stream().findFirst().orElse(null);
+        Terminal startTerminal = this.getFreeTerminals(bus.getType(), start, time).stream().findFirst().orElse(null);
 
         if (startTerminal == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freies Terminal in " + start.getName()  + " gefunden.");
         }
 
-        Terminal endTerminal = TripManager.getInstance().getFreeTerminals(bus.getType(), start, arrivalTime).stream().findFirst().orElse(null);
+        Terminal endTerminal = this.getFreeTerminals(bus.getType(), start, arrivalTime).stream().findFirst().orElse(null);
 
         if (endTerminal == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freies Terminal in " + end.getName()  + " gefunden.");
@@ -73,8 +67,8 @@ public class TripManager {
                 end
         );
 
-        DataManager.getInstance().addBus(bus);
-        DataManager.getInstance().addTrip(trip);
+        dataManager.getDataHandler().addBus(bus);
+        dataManager.getDataHandler().addTrip(trip);
         startTerminal.getTripIds().add(trip.getId());
         endTerminal.getTripIds().add(trip.getId());
         return trip;

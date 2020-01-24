@@ -24,7 +24,7 @@ public class TripDto {
     private String arrivalTerminal;
     private String busType;
 
-    public static TripDto toDto(Trip trip) {
+    public static TripDto toDto(DataManager dataManager, Trip trip) {
         if (trip == null)  {
             return null;
         }
@@ -33,13 +33,13 @@ public class TripDto {
 
         Integer id = trip.getId();
         Integer startId = trip.getStartId();
-        Terminal terminalByTripId = DataManager.getInstance().getTerminalByTripId(id, startId);
+        Terminal terminalByTripId = dataManager.getDataHandler().getTerminalByTripId(id, startId);
         String displayName = terminalByTripId.getDisplayName();
-        String displayName1 = DataManager.getInstance().getTerminalByTripId(trip.getId(), trip.getEndId()).getDisplayName();
-        String typeName = DataManager.getInstance().getBus(trip.getBusName()).getTypeName();
+        String displayName1 = dataManager.getDataHandler().getTerminalByTripId(trip.getId(), trip.getEndId()).getDisplayName();
+        String typeName = dataManager.getDataHandler().getBus(trip.getBusName()).getTypeName();
         return new TripDto(
-                DataManager.getInstance().getStation(trip.getStartId()).getName(),
-                DataManager.getInstance().getStation(trip.getEndId()).getName(),
+                dataManager.getDataHandler().getStation(trip.getStartId()).getName(),
+                dataManager.getDataHandler().getStation(trip.getEndId()).getName(),
                 start,
                 end,
                 displayName,

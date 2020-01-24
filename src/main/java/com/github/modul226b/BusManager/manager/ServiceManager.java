@@ -10,15 +10,6 @@ import java.util.Set;
 
 public class ServiceManager {
 
-    private static ServiceManager instance;
-
-    public static ServiceManager getInstance() {
-        if (instance == null) {
-            instance = new ServiceManager();
-        }
-        return instance;
-    }
-
     private HashMap<Class<? extends AbstractService>, AbstractService> serviceHashMap;
 
     public ServiceManager() {

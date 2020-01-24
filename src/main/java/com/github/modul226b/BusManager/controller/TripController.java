@@ -6,6 +6,7 @@ import com.github.modul226b.BusManager.dtos.TripDto;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.manager.TripManager;
 import com.github.modul226b.BusManager.model.Trip;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +18,18 @@ import java.util.List;
 @RequestMapping("/api/v1/trip/")
 @CrossOrigin(origins = {"*"})
 public class TripController {
+
+    private DataManager manager;
+
+    @Autowired
+    public TripController(DataManager manager) {
+        this.manager = manager;
+    }
+
     @GetMapping("get")
     public List<TripDto> getTripList() {
         List<TripDto> dtoList = new ArrayList<TripDto>();
-        DataManager.getInstance().getAllTrips().forEach(trip -> {
+        manager.getDataHandler().getAllTrips().forEach(trip -> {
             dtoList.add(TripDto.toDto(trip));
         });
         return dtoList;

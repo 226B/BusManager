@@ -4,6 +4,7 @@ import com.github.modul226b.BusManager.dtos.BusDto;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.model.Bus;
 import com.github.modul226b.BusManager.model.BusType;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,10 +17,18 @@ import java.util.List;
 @RequestMapping("/api/v1/bus/")
 @CrossOrigin(origins = {"*"})
 public class BusController {
+
+    private DataManager dataManager;
+
+    @Autowired
+    public BusController(DataManager dataManager) {
+        this.dataManager = dataManager;
+    }
+
     @GetMapping("get/")
     public List<BusDto> getAllBuses() {
         List<BusDto> daos = new ArrayList<>();
-        for (Bus bus : DataManager.getInstance().getBuses()) {
+        for (Bus bus : dataManager.getDataHandler().getBuses()) {
             daos.add(BusDto.ToDao(bus));
         }
 
@@ -34,7 +43,7 @@ public class BusController {
 
     @GetMapping("get/{busName}")
     public BusDto getBus(@PathVariable String busName) {
-        BusDto bus = BusDto.ToDao(DataManager.getInstance().getBus(busName));
+        BusDto bus = BusDto.ToDao(dataManager.getDataHandler().getBus(busName));
 
         if (bus == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bus mit dem namen " + busName + " nicht gefunden.");
@@ -49,25 +58,25 @@ public class BusController {
             override = false;
         }
 
-        if (DataManager.getInstance().getBus(bus.getName()) != null && !override) {
+        if (dataManager.getDataHandler().getBus(bus.getName()) != null && !override) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Dieser Bus existiert bereits, das überschreiben muss explizit angegeben sein.");
         }
 
-        if (DataManager.getInstance().getBusType(bus.getType().getName()) == null) {
+        if (dataManager.getDataHandler().getBusType(bus.getType().getName()) == null) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Dieser BusType existiert nicht.");
         }
 
-        DataManager.getInstance().addBus(new Bus(bus.getName(), bus.getType()));
+        dataManager.getDataHandler().addBus(new Bus(bus.getName(), bus.getType()));
     }
 
     @GetMapping("type/get/")
     public List<BusType> getAllBusTypes() {
-        return DataManager.getInstance().getBusTypes();
+        return dataManager.getDataHandler().getBusTypes();
     }
 
     @GetMapping("type/get/{typeName}")
     public BusType getBusType(@PathVariable String typeName) {
-        BusType type = DataManager.getInstance().getBusType(typeName);
+        BusType type = dataManager.getDataHandler().getBusType(typeName);
 
         if (type == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "BusType mit dem namen " + typeName + " nicht gefunden.");
@@ -82,32 +91,28 @@ public class BusController {
             override = false;
         }
 
-        if (DataManager.getInstance().getBusType(busType.getName()) != null && !override) {
+        if (dataManager.getDataHandler().getBusType(busType.getName()) != null && !override) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Dieser BusType existiert bereits, das überschreiben muss explizit angegeben sein.");
         }
 
-        DataManager.getInstance().addBusType(busType);
+        dataManager.getDataHandler().addBusType(busType);
     }
 
     @DeleteMapping("type/remove/{type}")
     public void deleteBusType(@PathVariable("type") String typeName) {
-        DataManager instance = DataManager.getInstance();
-
-        if (instance.getBusType(typeName) == null) {
+        if (dataManager.getDataHandler().getBusType(typeName) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Der Type mit dem Namen " + typeName + " wurde nicht gefunden.");
         }
 
-        DataManager.getInstance().removeBusType(typeName);
+        dataManager.getDataHandler().removeBusType(typeName);
     }
 
     @DeleteMapping("remove/{bus}")
     public void deleteBus(@PathVariable("bus") String bus) {
-        DataManager instance = DataManager.getInstance();
-
-        if (instance.getBusType(bus) == null) {
+        if (dataManager.getDataHandler().getBusType(bus) == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Der Bus mit dem Namen " + bus + " wurde nicht gefunden.");
         }
 
-        DataManager.getInstance().removeBusType(bus);
+        dataManager.getDataHandler().removeBusType(bus);
     }
 }

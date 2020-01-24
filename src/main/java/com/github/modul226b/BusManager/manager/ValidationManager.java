@@ -11,16 +11,8 @@ import java.util.List;
 import java.util.Set;
 
 public class ValidationManager {
-    private static ValidationManager instance;
-
-    public static ValidationManager getInstance() {
-        if (instance == null) {
-            instance = new ValidationManager();
-        }
-        return instance;
-    }
-
     private List<Validator<?>> validatorList;
+    private DataManager dataManager;
 
     private List<Validator<?>> loadAllValidators() {
         List<Validator<?>> result = new ArrayList<>();
@@ -38,13 +30,14 @@ public class ValidationManager {
         return result;
     }
 
-    public ValidationManager() {
+    public ValidationManager(DataManager dataManager) {
+        this.dataManager = dataManager;
         validatorList = loadAllValidators();
     }
 
     public List<ValidationResult> validate() {
         List<ValidationResult> results = new ArrayList<>();
-        List<IValidatable> objects = DataManager.getInstance().getAllObjects();
+        List<IValidatable> objects = dataManager.getDataHandler().getAllObjects();
         for (Validator<?> validator : validatorList) {
             this.validate(objects, results, validator);
         }
@@ -76,7 +69,7 @@ public class ValidationManager {
     }
 
     public List<ValidationResult> validate(Validator<? extends IValidatable> validator) {
-        List<IValidatable> validatables = DataManager.getInstance().getAllObjects();
+        List<IValidatable> validatables = dataManager.getDataHandler().getAllObjects();
         return this.validate(validatables, validator);
     }
 }

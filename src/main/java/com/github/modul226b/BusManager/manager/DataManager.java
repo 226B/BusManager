@@ -10,16 +10,14 @@ import lombok.experimental.Delegate;
 import java.util.List;
 
 public class DataManager {
-    private static DataManager instance;
     @Getter
-    @Delegate
     private IDataHandler dataHandler;
 
     public DataManager(IDataHandler handler) {
         dataHandler = handler;
     }
 
-    protected DataManager() {
+    public DataManager() {
         dataHandler = new JsonDataHandler("data.json");
     }
 
@@ -34,17 +32,5 @@ public class DataManager {
                 System.out.println("WARNING: " + result.getMessage());
             }
         }
-    }
-
-    public static void setInstance(IDataHandler handler) {
-        instance = new DataManager(handler);
-    }
-
-    public static DataManager getInstance() {
-        if (instance == null) {
-            instance = new DataManager();
-            instance.validate();
-        }
-        return instance;
     }
 }

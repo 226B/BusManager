@@ -11,18 +11,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BusManager {
+    private DataManager dataManager;
 
-    private static BusManager instance;
-
-    public static BusManager getInstance() {
-        if (instance == null) {
-            instance = new BusManager();
-        }
-        return instance;
+    public BusManager(DataManager dataManager) {
+        this.dataManager = dataManager;
     }
 
     public BusStation getStationAtTime(Bus bus, LocalDateTime time) {
-        List<Trip> allTrips = DataManager.getInstance().getAllTrips();
+        List<Trip> allTrips = dataManager.getDataHandler().getAllTrips();
         List<Trip> collect = allTrips.stream().filter(trip -> trip.getBus() == bus).sorted(Comparator.comparingLong(Trip::getArrivalTime)).collect(Collectors.toList());
 
         if (collect.size() == 0) {
@@ -33,14 +29,14 @@ public class BusManager {
             long startTime = trip.getStartTime();
             long l = TimeHelper.toLong(time);
             if (startTime > l) {
-                return DataManager.getInstance().getStation(trip.getStart().getId());
+                return dataManager.getDataHandler().getStation(trip.getStart().getId());
             }
         }
-        return DataManager.getInstance().getStation(collect.get(collect.size() - 1).getEnd().getId());
+        return dataManager.getDataHandler().getStation(collect.get(collect.size() - 1).getEnd().getId());
     }
 
     public Depot getDepotStation(Bus bus) {
-        for (Depot depot : DataManager.getInstance().getAllDepots()) {
+        for (Depot depot : dataManager.getDataHandler().getAllDepots()) {
             List<Bus> buses = depot.getBuses();
             if (buses.contains(bus)) {
                 return depot;
@@ -52,7 +48,7 @@ public class BusManager {
     public BusStation getLastStation(@NotNull Bus bus) {
         assert bus != null : "bus can not be null";
 
-        List<Trip> collect = DataManager.getInstance().getAllTrips().stream()
+        List<Trip> collect = dataManager.getDataHandler().getAllTrips().stream()
                 .filter(trip -> trip.getBus() == bus)
                 .sorted(Comparator.comparingLong(Trip::getArrivalTime))
                 .collect(Collectors.toList());
@@ -61,12 +57,12 @@ public class BusManager {
             return getCurrentStation(bus);
         }
 
-        return DataManager.getInstance().getStation(collect.get(collect.size() - 1).getEnd().getId());
+        return dataManager.getDataHandler().getStation(collect.get(collect.size() - 1).getEnd().getId());
     }
 
 
     public BusStation getCurrentStation(Bus bus) {
-        for (BusStation station : DataManager.getInstance().getAllStations()) {
+        for (BusStation station : dataManager.getDataHandler().getAllStations()) {
             for (Bus bus1 : station.getDepot().getBuses()) {
                 if (bus1.equals(bus)) {
                     return station;
@@ -79,7 +75,7 @@ public class BusManager {
     public Trip getLastTrip(Bus bus) {
         assert bus != null : "bus can not be null";
 
-        List<Trip> collect = DataManager.getInstance().getAllTrips().stream()
+        List<Trip> collect = dataManager.getDataHandler().getAllTrips().stream()
                 .filter(trip -> trip.getBus() == bus)
                 .sorted(Comparator.comparingLong(Trip::getArrivalTime))
                 .collect(Collectors.toList());
@@ -92,7 +88,7 @@ public class BusManager {
     }
     public Bus getFreeBus(LocalDateTime startTime, int capacity, BusStation start) {
 
-        List<BusType> types = DataManager.getInstance().getBusTypes().stream()
+        List<BusType> types = dataManager.getDataHandler().getBusTypes().stream()
                 .filter(busType -> busType.getCapacity() >= capacity)
                 .sorted(Comparator.comparingInt(BusType::getCapacity))
                 .collect(Collectors.toList());
@@ -120,7 +116,7 @@ public class BusManager {
 
     public List<Bus> getBusesWithFinalPositionAtStation(BusStation station) {
         List<Bus> buses = new ArrayList<>();
-        for (Bus bus : DataManager.getInstance().getAllBuses()) {
+        for (Bus bus : dataManager.getDataHandler().getAllBuses()) {
             BusStation s = getLastStation(bus);
             if (station.getName().equals(s.getName())) {
                 buses.add(bus);
