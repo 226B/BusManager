@@ -26,7 +26,7 @@ public class BusManager {
         List<Trip> collect = allTrips.stream().filter(trip -> trip.getBus() == bus).sorted(Comparator.comparingLong(Trip::getArrivalTime)).collect(Collectors.toList());
 
         if (collect.size() == 0) {
-            return null;
+            return getCurrentStation(bus);
         }
 
         for (Trip trip : collect) {
@@ -58,13 +58,23 @@ public class BusManager {
                 .collect(Collectors.toList());
 
         if (collect.size() == 0) {
-            return null;
+            return getCurrentStation(bus);
         }
 
         return DataManager.getInstance().getStation(collect.get(collect.size() - 1).getEnd().getId());
     }
 
 
+    public BusStation getCurrentStation(Bus bus) {
+        for (BusStation station : DataManager.getInstance().getAllStations()) {
+            for (Bus bus1 : station.getDepot().getBuses()) {
+                if (bus1.equals(bus)) {
+                    return station;
+                }
+            }
+        }
+        return null;
+    }
 
     public Trip getLastTrip(Bus bus) {
         assert bus != null : "bus can not be null";
@@ -80,7 +90,7 @@ public class BusManager {
 
         return collect.get(collect.size() - 1);
     }
-    public Bus getFreeBus(LocalDateTime startTime, int capacity, BusStation start, BusStation end) {
+    public Bus getFreeBus(LocalDateTime startTime, int capacity, BusStation start) {
 
         List<BusType> types = DataManager.getInstance().getBusTypes().stream()
                 .filter(busType -> busType.getCapacity() >= capacity)

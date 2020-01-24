@@ -28,6 +28,9 @@ public class TripController {
 
     @PostMapping("add")
     public ResponseEntity<TripDto> addTrip(@RequestBody CreateTripDto createTripDto) {
+
+        //todo check if createTripDto is valid
+
         Trip trip = TripManager.getInstance().addTrip(
                 createTripDto.getStartStation(),
                 createTripDto.getCapacity(),

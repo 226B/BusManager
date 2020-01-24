@@ -21,7 +21,9 @@ public class DataManager {
 
     protected DataManager() {
         dataHandler = new JsonDataHandler("data.json");
+    }
 
+    private void validate() {
         ServiceManager.getInstance();
         List<ValidationResult> results = ValidationManager.getInstance().validate();
         for (ValidationResult result : results) {
@@ -41,6 +43,7 @@ public class DataManager {
     public static DataManager getInstance() {
         if (instance == null) {
             instance = new DataManager();
+            instance.validate();
         }
         return instance;
     }

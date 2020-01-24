@@ -24,6 +24,8 @@ public class BusManagerTests {
         dataHandler.addTerminalType(normal);
         Bus test1 = new Bus("Test1", klein);
         dataHandler.addBus(test1);
+        Bus test2 = new Bus("Test2", klein);
+        dataHandler.addBus(test2);
 
         //zürich
         Location zHLocation = new Location(100, 100);
@@ -32,6 +34,7 @@ public class BusManagerTests {
         Depot zHdepot = new Depot("ZHdepot");
         dataHandler.addDepot(zHdepot);
         zHdepot.addBus(test1.getName());
+        zHdepot.addBus(test2.getName());
 
         BusStation zürich = new BusStation("zürich", zHLocation, zHdepot);
         dataHandler.addStation(zürich);
@@ -136,13 +139,34 @@ public class BusManagerTests {
     }
 
     @Test
-    public void test_get_free_bus() {
+    public void test_get_free_bus_no_bus_found() {
         BusStation be = DataManager.getInstance().getStation("bern");
-        BusStation zh = DataManager.getInstance().getStation("zürich");
 
-        Bus bus = BusManager.getInstance().getFreeBus(LocalDateTime.now(), 100, be, zh);
+        Bus bus = BusManager.getInstance().getFreeBus(LocalDateTime.now(), 100, be);
+
+        Assertions.assertNull(bus);
+    }
+    @Test
+    public void test_get_free_bus() {
+        BusStation bs = DataManager.getInstance().getStation("basel");
+
+        Bus bus = BusManager.getInstance().getFreeBus(LocalDateTime.now(), 100, bs);
 
         Assertions.assertNotNull(bus);
         Assertions.assertEquals("Test1", bus.getName());
+    }
+
+    @Test
+    public void test_get_station_for_bus_with_no_trips() {
+        //arrange
+        Bus bus = DataManager.getInstance().getBus("Test2");
+        LocalDateTime time = LocalDateTime.of(2020, 1, 1, 19, 45,0);
+
+        //act
+        BusStation station = BusManager.getInstance().getStationAtTime(bus, time);
+
+        //assert
+        Assertions.assertNotNull(station);
+        Assertions.assertEquals("zürich",station.getName());
     }
 }

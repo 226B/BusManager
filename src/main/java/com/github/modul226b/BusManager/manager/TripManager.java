@@ -41,7 +41,7 @@ public class TripManager {
             }
         }
 
-        Bus bus = BusManager.getInstance().getFreeBus(time, capacity, start, end);
+        Bus bus = BusManager.getInstance().getFreeBus(time, capacity, start);
 
         if (bus == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freier Bus in "+ start.getName() +" gefunden.");

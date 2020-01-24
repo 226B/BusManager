@@ -13,6 +13,7 @@ public class BusManagerApplication {
     public static void main(String[] args) {
         //createMockData();
         //createMockTrips();
+        DataManager.getInstance();
         SpringApplication.run(BusManagerApplication.class, args);
     }
 
