@@ -48,8 +48,18 @@ public class BaseJsonDataHandler implements IDataHandler {
     }
 
     @Override
-    public List<Bus> getBuses() {
+    public List<Bus> getAllBuses() {
         return new ArrayList<>(dataHolder.getBuses().values());
+    }
+
+    @Override
+    public List<Depot> getAllDepots() {
+        return new ArrayList<>(dataHolder.getDepots().values());
+    }
+
+    @Override
+    public List<BusStation> getAllStations() {
+        return new ArrayList<>(dataHolder.getStations().values());
     }
 
     @Override
@@ -122,7 +132,7 @@ public class BaseJsonDataHandler implements IDataHandler {
 
     @Override
     public Depot getDepot(String name) {
-        return dataHolder.getDepots().getOrDefault(name.toLowerCase(), null);
+        return dataHolder.getDepots().getOrDefault(name, null);
     }
 
     @Override
@@ -132,12 +142,12 @@ public class BaseJsonDataHandler implements IDataHandler {
 
     @Override
     public void addBus(Bus bus) {
-        dataHolder.getBuses().put(bus.getName().toLowerCase(), bus);
+        dataHolder.getBuses().put(bus.getName(), bus);
     }
 
     @Override
     public void addBusType(BusType type) {
-        dataHolder.getBusTypes().put(type.getName().toLowerCase(), type);
+        dataHolder.getBusTypes().put(type.getName(), type);
     }
 
     @Override
@@ -147,7 +157,7 @@ public class BaseJsonDataHandler implements IDataHandler {
 
     @Override
     public void addTerminalType(TerminalType type) {
-        dataHolder.getTerminalTypes().put(type.getName().toLowerCase(), type);
+        dataHolder.getTerminalTypes().put(type.getName(), type);
     }
 
     @Override
@@ -162,12 +172,12 @@ public class BaseJsonDataHandler implements IDataHandler {
 
     @Override
     public void addDepot(Depot depot) {
-        dataHolder.getDepots().put(depot.getName().toLowerCase(), depot);
+        dataHolder.getDepots().put(depot.getName(), depot);
     }
 
     @Override
     public void addStation(BusStation station) {
-        dataHolder.getStations().put(station.getName().toLowerCase(), station);
+        dataHolder.getStations().put(station.getName(), station);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.github.modul226b.BusManager.manager;
 
 import com.github.modul226b.BusManager.dtos.TripDto;
+import com.github.modul226b.BusManager.helpers.TimeHelper;
 import com.github.modul226b.BusManager.model.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class TripManager {
         return instance;
     }
 
-    public Trip addTrip(String startStation, String endStation, LocalDateTime time) throws ResponseStatusException {
+    public Trip addTrip(String startStation, int capacity, String endStation, LocalDateTime time) throws ResponseStatusException {
         BusStation start = DataManager.getInstance().getStation(startStation);
         BusStation end = DataManager.getInstance().getStation(endStation);
 
@@ -35,12 +36,12 @@ public class TripManager {
         }
 
         for (Trip trip : DataManager.getInstance().getAllTrips()) {
-            if (trip.getStartTime() == time.atZone(ZoneId.of("EST")).toInstant().toEpochMilli()) {
+            if (trip.getStartTime() == TimeHelper.toLong(time)) {
                 throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Es exisitert bereits eine Fahrt zu dieser Zeit.");
             }
         }
 
-        Bus bus = TripManager.getInstance().getFreeBus(time, start, end);
+        Bus bus = BusManager.getInstance().getFreeBus(time, capacity, start, end);
 
         if (bus == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freier Bus in "+ start.getName() +" gefunden.");
@@ -79,13 +80,6 @@ public class TripManager {
         return trip;
     }
 
-    public Bus getFreeBus(LocalDateTime startTime, BusStation start, BusStation end) {
-        return null; //todo implement
-    }
-
-    public LocalDateTime getLockedUntil(LocalDateTime startTime, BusStation start, BusStation end, BusType type) {
-        return null; //todo
-    }
 
     public LocalDateTime getArrivalTime(LocalDateTime startTime, BusType busType, BusStation start, BusStation end) {
         Location location = start.getLocation();
@@ -108,14 +102,15 @@ public class TripManager {
             boolean valid = true;
             for (Trip trip : terminal.getTrips()) {
                 if (station.getLocation().equals(trip.getStart())) {
-                    if (trip.getStartTime() < time.atZone(ZoneId.of("EST")).toInstant().toEpochMilli() + 10 * 60 * 1000
-                            && trip.getStartTime() > time.atZone(ZoneId.of("EST")).toInstant().toEpochMilli() - 10 * 60 * 1000) {
+
+                    if (trip.getStartTime() < TimeHelper.toLong(time.plusSeconds(type.getRecoveryTime()*60))
+                            && trip.getStartTime() > TimeHelper.toLong(time.plusSeconds(type.getRecoveryTime()*60))) {
                         valid = false;
                         break;
                     }
                 } else if (station.getLocation().equals(trip.getEnd())) {
-                    if (trip.getArrivalTime() < time.atZone(ZoneId.of("EST")).toInstant().toEpochMilli() + 10 * 60 * 1000
-                            && trip.getArrivalTime() > time.atZone(ZoneId.of("EST")).toInstant().toEpochMilli() - 10 * 60 * 1000) {
+                    if (trip.getArrivalTime() < TimeHelper.toLong(time.plusSeconds(type.getRecoveryTime()*60))
+                            && trip.getArrivalTime() > TimeHelper.toLong(time.plusSeconds(type.getRecoveryTime()*60))) {
                         valid = false;
                         break;
                     }

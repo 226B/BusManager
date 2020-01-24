@@ -30,6 +30,13 @@ public class Depot implements IValidatable {
         busNames.add(bus);
     }
 
+    public void removeBus(String bus) {
+        DataManager instance = DataManager.getInstance();
+        assert instance.getBus(bus) != null : "bus must be registered.";
+
+        busNames.remove(bus);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof Depot)) {

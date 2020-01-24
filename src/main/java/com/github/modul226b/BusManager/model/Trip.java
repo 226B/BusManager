@@ -38,7 +38,7 @@ public class Trip implements IValidatable {
 
         DataManager instance = DataManager.getInstance();
 
-        assert instance.getBus(bus.getName().toLowerCase()) != null : "bus must be registered.";
+        assert instance.getBus(bus.getName()) != null : "bus must be registered.";
         assert instance.getLocation(start.getId()) != null : "start Location must be registered.";
         assert instance.getLocation(end.getId()) != null : "end Location must be registered.";
         assert instance.getStation(start.getId()) != null : "start must be a BusStation";
@@ -60,7 +60,7 @@ public class Trip implements IValidatable {
 
 
     public Bus getBus() {
-        return DataManager.getInstance().getBus(this.busName.toLowerCase());
+        return DataManager.getInstance().getBus(this.busName);
     }
 
     public Location getStart() {

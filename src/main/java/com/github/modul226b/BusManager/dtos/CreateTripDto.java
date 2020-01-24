@@ -10,5 +10,6 @@ import java.time.LocalDateTime;
 public class CreateTripDto {
     String startStation;
     String endStation;
+    int capacity;
     LocalDateTime time;
 }

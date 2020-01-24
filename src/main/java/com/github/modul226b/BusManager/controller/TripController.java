@@ -30,6 +30,7 @@ public class TripController {
     public ResponseEntity<TripDto> addTrip(@RequestBody CreateTripDto createTripDto) {
         Trip trip = TripManager.getInstance().addTrip(
                 createTripDto.getStartStation(),
+                createTripDto.getCapacity(),
                 createTripDto.getEndStation(),
                 createTripDto.getTime()
         );

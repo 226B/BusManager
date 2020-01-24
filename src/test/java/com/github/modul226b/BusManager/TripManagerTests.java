@@ -2,18 +2,17 @@ package com.github.modul226b.BusManager;
 
 import com.github.modul226b.BusManager.datahandeling.MockDataHandler;
 import com.github.modul226b.BusManager.helpers.TimeHelper;
-import com.github.modul226b.BusManager.manager.BusManager;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.manager.TripManager;
 import com.github.modul226b.BusManager.model.*;
-import com.github.modul226b.BusManager.service.services.BusMoverService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-public class BusMoverServiceTests {
+public class TripManagerTests {
+
     @BeforeEach
     public void beforeEach() {
         MockDataHandler dataHandler = new MockDataHandler();
@@ -61,7 +60,6 @@ public class BusMoverServiceTests {
         bern.addTerminal(beTerminal1.getId());
         bern.addTerminal(beTerminal2.getId());
 
-
         //trips
         LocalDateTime trip1Time = LocalDateTime.of(2020, 1, 1, 12, 0, 0);
         LocalDateTime trip1ArrivalTime = TripManager.getInstance().getArrivalTime(trip1Time, klein, zürich, bern);
@@ -80,17 +78,14 @@ public class BusMoverServiceTests {
     }
 
     @Test
-    public void test_move_after_one_trip() {
+    public void test_add_trip() {
         //arrange
-        BusMoverService service = new BusMoverService();
-        BusStation zürich = DataManager.getInstance().getStation("zürich");
-        BusStation bern = DataManager.getInstance().getStation("bern");
+        LocalDateTime start = LocalDateTime.of(2020, 1, 1, 20, 0);
 
         //act
-        service.run();
+        Trip trip = TripManager.getInstance().addTrip("bern", 100, "zürich", start);
 
         //assert
-        Assertions.assertEquals(0, zürich.getDepot().getBuses().size());
-        Assertions.assertEquals(1, bern.getDepot().getBuses().size());
+        Assertions.assertEquals("Test1", trip.getBus().getName());
     }
 }

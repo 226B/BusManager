@@ -17,7 +17,9 @@ public interface IDataHandler {
 
     List<Bus> getBuses(List<String> terminals);
 
-    List<Bus> getBuses();
+    List<Bus> getAllBuses();
+    List<Depot> getAllDepots();
+    List<BusStation> getAllStations();
 
     BusType getBusType(String name);
 

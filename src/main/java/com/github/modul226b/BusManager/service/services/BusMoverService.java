@@ -1,16 +1,13 @@
 package com.github.modul226b.BusManager.service.services;
 
-import com.github.modul226b.BusManager.helpers.TimeHelper;
+import com.github.modul226b.BusManager.manager.BusManager;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.model.Bus;
-import com.github.modul226b.BusManager.model.Trip;
+import com.github.modul226b.BusManager.model.BusStation;
+import com.github.modul226b.BusManager.model.Depot;
 import com.github.modul226b.BusManager.service.AbstractService;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.time.LocalDateTime;
 
 public class BusMoverService extends AbstractService {
 
@@ -26,21 +23,13 @@ public class BusMoverService extends AbstractService {
 
     @Override
     public void run() {
-        HashMap<Bus, List<Trip>> map = new HashMap<>();
-
-        List<Trip> allTrips = DataManager.getInstance().getAllTrips();
-        for (Trip trip : allTrips.stream().sorted(Comparator.comparingLong(Trip::getArrivalTime)).collect(Collectors.toList())) {
-            if (!map.containsKey(trip.getBus())) {
-                map.put(trip.getBus(), new ArrayList<>());
-            }
-            Bus bus = trip.getBus();
-            map.get(bus).add(trip);
-        }
-
-        for (Bus bus : map.keySet()) {
-            System.out.println("bus:" + bus.getName());
-            for (Trip trip : map.get(bus)) {
-                System.out.println(TimeHelper.toLocalDateTime(trip.getArrivalTime()));
+        LocalDateTime now = LocalDateTime.now();
+        for (Bus bus : DataManager.getInstance().getAllBuses()) {
+            BusStation station = BusManager.getInstance().getStationAtTime(bus, now);
+            Depot depotStation = BusManager.getInstance().getDepotStation(bus);
+            if (!station.getName().equals(depotStation.getName())) {
+                station.getDepot().addBus(bus.getName());
+                depotStation.removeBus(bus.getName());
             }
         }
     }
