@@ -1,6 +1,5 @@
 package com.github.modul226b.BusManager.model;
 
-import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -11,29 +10,20 @@ import java.util.List;
 public class Depot implements IValidatable {
     private String name;
     private List<String> busNames;
-    private DataManager dataManager;
 
-    public Depot(DataManager dataManager, String depotName) {
-        this.dataManager = dataManager;
+    public Depot(String depotName) {
         assert depotName != null : "name should not be null.";
 
         this.name = depotName;
         this.busNames = new ArrayList<>();
     }
 
-    public List<Bus> getBuses() {
-        return dataManager.getDataHandler().getBuses(busNames);
-    }
 
     public void addBus(String bus) {
-        assert dataManager.getDataHandler().getBus(bus) != null : "bus must be registered.";
-
         busNames.add(bus);
     }
 
     public void removeBus(String bus) {
-        assert dataManager.getDataHandler().getBus(bus) != null : "bus must be registered.";
-
         busNames.remove(bus);
     }
 

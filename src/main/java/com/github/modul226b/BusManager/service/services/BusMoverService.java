@@ -33,7 +33,7 @@ public class BusMoverService extends AbstractService {
             BusStation station = this.getBusManager().getStationAtTime(bus, now);
             Depot depotStation = this.getBusManager().getDepotStation(bus);
             if (!station.getName().equals(depotStation.getName())) {
-                station.getDepot().addBus(bus.getName());
+                this.getDataManager().getDataHandler().getDepot(station.getDepotName()).addBus(bus.getName());
                 depotStation.removeBus(bus.getName());
             }
         }

@@ -41,31 +41,32 @@ public class TripManager {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freier Bus in "+ start.getName() +" gefunden.");
         }
 
-        LocalDateTime arrivalTime = this.getArrivalTime(time, bus.getType(), start, end);
+        BusType busType = dataManager.getDataHandler().getBusType(bus.getTypeName());
+        LocalDateTime arrivalTime = this.getArrivalTime(time, busType, start, end);
 
         if (arrivalTime == null) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Fehler beim berechnen der Ankunftszeit.");
         }
 
-        Terminal startTerminal = this.getFreeTerminals(bus.getType(), start, time).stream().findFirst().orElse(null);
+        Terminal startTerminal = this.getFreeTerminals(busType, start, time).stream().findFirst().orElse(null);
 
         if (startTerminal == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freies Terminal in " + start.getName()  + " gefunden.");
         }
 
-        Terminal endTerminal = this.getFreeTerminals(bus.getType(), start, arrivalTime).stream().findFirst().orElse(null);
+        Terminal endTerminal = this.getFreeTerminals(busType, start, arrivalTime).stream().findFirst().orElse(null);
 
         if (endTerminal == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freies Terminal in " + end.getName()  + " gefunden.");
         }
 
         Trip trip = new Trip(
-                dataManager,
-                time,
-                arrivalTime,
+                dataManager.getDataHandler().getNextTripId(),
+                TimeHelper.toLong(time),
+                TimeHelper.toLong(arrivalTime),
                 bus,
-                start,
-                end
+                dataManager.getDataHandler().getLocation(start.getLocationId()),
+                dataManager.getDataHandler().getLocation(end.getLocationId())
         );
 
         dataManager.getDataHandler().addBus(bus);
@@ -77,10 +78,10 @@ public class TripManager {
 
 
     public LocalDateTime getArrivalTime(LocalDateTime startTime, BusType busType, BusStation start, BusStation end) {
-        Location location = start.getLocation();
-        Location location1 = end.getLocation();
-        double pow = Math.pow(location.getX() - location1.getX(), 2);
-        double pow1 = Math.pow(start.getLocation().getY() - end.getLocation().getY(), 2);
+        Location startLocation = dataManager.getDataHandler().getLocation(start.getLocationId());
+        Location endLocation = dataManager.getDataHandler().getLocation(end.getLocationId());
+        double pow = Math.pow(startLocation.getX() - endLocation.getX(), 2);
+        double pow1 = Math.pow(startLocation.getY() - endLocation.getY(), 2);
         double distance = Math.sqrt(pow + pow1);
 
         long time = Math.round(distance / busType.getDistancePerH() * 60 * 60 + 0.5);
@@ -90,20 +91,21 @@ public class TripManager {
 
     public List<Terminal> getFreeTerminals(BusType type, BusStation station, LocalDateTime time) {
         List<Terminal> result = new ArrayList<>();
-        for (Terminal terminal : station.getTerminals()) {
-            if (terminal.getType().getCapacity() < type.getCapacity()) {
+        for (Terminal terminal : dataManager.getDataHandler().getTerminals(station.getTerminalIds())) {
+            TerminalType terminalType = dataManager.getDataHandler().getTerminalType(terminal.getTypeName());
+            if (terminalType.getCapacity() < type.getCapacity()) {
                 break;
             }
             boolean valid = true;
-            for (Trip trip : terminal.getTrips()) {
-                if (station.getLocation().equals(trip.getStart())) {
+            for (Trip trip : dataManager.getDataHandler().getTrips(terminal.getTripIds())) {
+                if (station.getLocationId().equals(trip.getStartId())) {
 
                     if (trip.getStartTime() < TimeHelper.toLong(time.plusSeconds(type.getRecoveryTime()*60))
                             && trip.getStartTime() > TimeHelper.toLong(time.plusSeconds(type.getRecoveryTime()*60))) {
                         valid = false;
                         break;
                     }
-                } else if (station.getLocation().equals(trip.getEnd())) {
+                } else if (station.getLocationId().equals(trip.getEndId())) {
                     if (trip.getArrivalTime() < TimeHelper.toLong(time.plusSeconds(type.getRecoveryTime()*60))
                             && trip.getArrivalTime() > TimeHelper.toLong(time.plusSeconds(type.getRecoveryTime()*60))) {
                         valid = false;

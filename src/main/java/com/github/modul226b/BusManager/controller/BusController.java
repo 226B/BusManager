@@ -29,7 +29,7 @@ public class BusController {
     public List<BusDto> getAllBuses() {
         List<BusDto> daos = new ArrayList<>();
         for (Bus bus : dataManager.getDataHandler().getBuses()) {
-            daos.add(BusDto.ToDao(bus));
+            daos.add(BusDto.ToDao(dataManager, bus));
         }
 
         Comparator<BusDto> comparing = Comparator.comparing(o -> o.getType().getName());
@@ -43,7 +43,7 @@ public class BusController {
 
     @GetMapping("get/{busName}")
     public BusDto getBus(@PathVariable String busName) {
-        BusDto bus = BusDto.ToDao(dataManager.getDataHandler().getBus(busName));
+        BusDto bus = BusDto.ToDao(dataManager, dataManager.getDataHandler().getBus(busName));
 
         if (bus == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bus mit dem namen " + busName + " nicht gefunden.");
@@ -66,7 +66,7 @@ public class BusController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Dieser BusType existiert nicht.");
         }
 
-        dataManager.getDataHandler().addBus(new Bus(dataManager, bus.getName(), bus.getType()));
+        dataManager.getDataHandler().addBus(new Bus(bus.getName(), bus.getType()));
     }
 
     @GetMapping("type/get/")

@@ -18,7 +18,7 @@ public class BusManager {
 
     public BusStation getStationAtTime(Bus bus, LocalDateTime time) {
         List<Trip> allTrips = dataManager.getDataHandler().getAllTrips();
-        List<Trip> collect = allTrips.stream().filter(trip -> trip.getBus() == bus).sorted(Comparator.comparingLong(Trip::getArrivalTime)).collect(Collectors.toList());
+        List<Trip> collect = allTrips.stream().filter(trip -> trip.getBusName().equals(bus.getName())).sorted(Comparator.comparingLong(Trip::getArrivalTime)).collect(Collectors.toList());
 
         if (collect.size() == 0) {
             return getCurrentStation(bus);
@@ -28,15 +28,15 @@ public class BusManager {
             long startTime = trip.getStartTime();
             long l = TimeHelper.toLong(time);
             if (startTime > l) {
-                return dataManager.getDataHandler().getStation(trip.getStart().getId());
+                return dataManager.getDataHandler().getStation(trip.getStartId());
             }
         }
-        return dataManager.getDataHandler().getStation(collect.get(collect.size() - 1).getEnd().getId());
+        return dataManager.getDataHandler().getStation(collect.get(collect.size() - 1).getEndId());
     }
 
     public Depot getDepotStation(Bus bus) {
         for (Depot depot : dataManager.getDataHandler().getAllDepots()) {
-            List<Bus> buses = depot.getBuses();
+            List<Bus> buses = dataManager.getDataHandler().getBuses(depot.getBusNames());
             if (buses.contains(bus)) {
                 return depot;
             }
@@ -48,7 +48,7 @@ public class BusManager {
         assert bus != null : "bus can not be null";
 
         List<Trip> collect = dataManager.getDataHandler().getAllTrips().stream()
-                .filter(trip -> trip.getBus() == bus)
+                .filter(trip -> trip.getBusName().equals(bus.getName()))
                 .sorted(Comparator.comparingLong(Trip::getArrivalTime))
                 .collect(Collectors.toList());
 
@@ -56,13 +56,14 @@ public class BusManager {
             return getCurrentStation(bus);
         }
 
-        return dataManager.getDataHandler().getStation(collect.get(collect.size() - 1).getEnd().getId());
+        return dataManager.getDataHandler().getStation(collect.get(collect.size() - 1).getEndId());
     }
 
 
     public BusStation getCurrentStation(Bus bus) {
         for (BusStation station : dataManager.getDataHandler().getAllStations()) {
-            for (Bus bus1 : station.getDepot().getBuses()) {
+            for (Bus bus1 : dataManager.getDataHandler()
+                    .getBuses(dataManager.getDataHandler().getDepot(station.getDepotName()).getBusNames())) {
                 if (bus1.equals(bus)) {
                     return station;
                 }
@@ -75,7 +76,7 @@ public class BusManager {
         assert bus != null : "bus can not be null";
 
         List<Trip> collect = dataManager.getDataHandler().getAllTrips().stream()
-                .filter(trip -> trip.getBus() == bus)
+                .filter(trip -> trip.getBusName().equals(bus.getName()))
                 .sorted(Comparator.comparingLong(Trip::getArrivalTime))
                 .collect(Collectors.toList());
 
@@ -100,7 +101,7 @@ public class BusManager {
         List<Bus> freeBusesAtStation = getBusesWithFinalPositionAtStation(start);
         for (BusType type : types) {
             for (Bus bus : freeBusesAtStation) {
-                if (!bus.getType().getName().equals(type.getName())) {
+                if (!bus.getTypeName().equals(type.getName())) {
                     continue;
                 }
 

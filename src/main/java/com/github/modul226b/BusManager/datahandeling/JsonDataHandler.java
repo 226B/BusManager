@@ -8,6 +8,9 @@ import lombok.Getter;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class JsonDataHandler extends BaseJsonDataHandler {
     @Getter
@@ -28,7 +31,7 @@ public class JsonDataHandler extends BaseJsonDataHandler {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             String string = gson.toJson(this.getDataHolder());
             try {
-                BufferedWriter writer = new BufferedWriter(new FileWriter(jsonFileName));
+                BufferedWriter writer = Files.newBufferedWriter(Path.of(jsonFileName));
                 writer.append(string);
                 writer.close();
             } catch (IOException ex) {

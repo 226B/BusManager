@@ -8,6 +8,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BaseJsonDataHandler implements IDataHandler {
 
@@ -210,8 +211,13 @@ public class BaseJsonDataHandler implements IDataHandler {
 
     @Override
     public Terminal getTerminalByTripId(int tripId, int locationId) {
-        for (Terminal t: this.getStation(locationId).getTerminals()) {
+        BusStation station = this.getStation(locationId);
 
+        List<Terminal> terminals =
+                dataHolder.getTerminals().values().stream()
+                        .filter(terminal -> station.getTerminalIds().contains(terminal.getId()))
+                        .collect(Collectors.toList());
+        for (Terminal t: terminals) {
             if (t.getTripIds().contains(tripId)) {
                 return t;
             }

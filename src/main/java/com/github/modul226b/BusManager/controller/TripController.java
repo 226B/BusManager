@@ -34,9 +34,11 @@ public class TripController {
     @GetMapping("get")
     public List<TripDto> getTripList() {
         List<TripDto> dtoList = new ArrayList<TripDto>();
-        dataManager.getDataHandler().getAllTrips().forEach(trip -> {
-            dtoList.add(TripDto.toDto(dataManager, trip));
-        });
+        List<Trip> allTrips = dataManager.getDataHandler().getAllTrips();
+        for (Trip trip : allTrips) {
+            TripDto e = TripDto.toDto(dataManager, trip);
+            dtoList.add(e);
+        }
         return dtoList;
     }
 

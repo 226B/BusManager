@@ -24,7 +24,7 @@ public class ValidationTests {
 
         ValidationManager manager = new ValidationManager(dataManager, busManager, tripManager);
 
-        dataManager.getDataHandler().addLocation(new Location(dataManager, 100, 100));
+        dataManager.getDataHandler().addLocation(new Location(1, 100, 100));
 
         List<ValidationResult> result = manager.validate(new NullValidator(dataManager, busManager, tripManager));
 

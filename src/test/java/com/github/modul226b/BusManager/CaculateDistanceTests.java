@@ -21,17 +21,17 @@ public class CaculateDistanceTests {
         BusManager busManager = new BusManager(dataManager);
         TripManager tripManager = new TripManager(dataManager, busManager);
 
-        Location location = new Location(dataManager, 100, 100);
+        Location location = new Location(1, 100, 100);
         dataManager.getDataHandler().addLocation(location);
-        Location location1 = new Location(dataManager, 200, 200);
+        Location location1 = new Location(2, 200, 200);
         dataManager.getDataHandler().addLocation(location1);
-        Depot zd = new Depot(dataManager, "Zd");
+        Depot zd = new Depot( "Zd");
         dataManager.getDataHandler().addDepot(zd);
-        Depot bd = new Depot(dataManager, "Bd");
+        Depot bd = new Depot( "Bd");
         dataManager.getDataHandler().addDepot(bd);
 
-        BusStation z = new BusStation(dataManager, "z", location, zd);
-        BusStation b = new BusStation(dataManager, "b", location1, bd);
+        BusStation z = new BusStation( "z", location, zd);
+        BusStation b = new BusStation( "b", location1, bd);
         BusType busType = new BusType("bus", 300, 10, 10, 100.0);
 
         LocalDateTime now = LocalDateTime.of(2020, 1, 1, 0,0,0);
