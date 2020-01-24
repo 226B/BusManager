@@ -1,22 +1,16 @@
 package com.github.modul226b.BusManager;
 
-import com.github.modul226b.BusManager.manager.DataManager;
-import com.github.modul226b.BusManager.model.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.time.LocalDateTime;
 
 @SpringBootApplication
 public class BusManagerApplication {
 
     public static void main(String[] args) {
-        //createMockData();
-        //createMockTrips();
-        DataManager.getInstance();
         SpringApplication.run(BusManagerApplication.class, args);
     }
 
+    /*
     public static void createMockData() {
         DataManager.getInstance().addDepot(new Depot("Zürich"));
         DataManager.getInstance().addDepot(new Depot("Bern"));
@@ -151,4 +145,5 @@ public class BusManagerApplication {
         DataManager.getInstance().getTerminal(bern).getTripIds().add(2);
     }
 
+     */
 }

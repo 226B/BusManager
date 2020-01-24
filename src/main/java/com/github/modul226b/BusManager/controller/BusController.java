@@ -66,7 +66,7 @@ public class BusController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Dieser BusType existiert nicht.");
         }
 
-        dataManager.getDataHandler().addBus(new Bus(bus.getName(), bus.getType()));
+        dataManager.getDataHandler().addBus(new Bus(dataManager, bus.getName(), bus.getType()));
     }
 
     @GetMapping("type/get/")

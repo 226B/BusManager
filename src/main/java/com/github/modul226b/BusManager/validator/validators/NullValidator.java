@@ -1,11 +1,18 @@
 package com.github.modul226b.BusManager.validator.validators;
 
+import com.github.modul226b.BusManager.manager.BusManager;
+import com.github.modul226b.BusManager.manager.DataManager;
+import com.github.modul226b.BusManager.manager.TripManager;
 import com.github.modul226b.BusManager.model.IValidatable;
 import com.github.modul226b.BusManager.validator.internal.ValidationResult;
 import com.github.modul226b.BusManager.validator.internal.ValidationState;
 import com.github.modul226b.BusManager.validator.internal.Validator;
 
 public class NullValidator extends Validator<IValidatable> {
+    public NullValidator(DataManager dataManager, BusManager busManager, TripManager tripManager) {
+        super(dataManager, busManager, tripManager);
+    }
+
     @Override
     public ValidationResult validate(IValidatable validation) {
         if (validation == null) {

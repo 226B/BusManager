@@ -13,6 +13,8 @@ import java.util.Set;
 public class ValidationManager {
     private List<Validator<?>> validatorList;
     private DataManager dataManager;
+    private BusManager busManager;
+    private TripManager tripManager;
 
     private List<Validator<?>> loadAllValidators() {
         List<Validator<?>> result = new ArrayList<>();
@@ -22,7 +24,7 @@ public class ValidationManager {
         classes = reflections.getSubTypesOf(Validator.class);
         for (Class<? extends Validator> c : classes) {
             try {
-                result.add(c.newInstance());
+                result.add(c.getConstructor(DataManager.class, BusManager.class, TripManager.class).newInstance(dataManager, busManager, tripManager));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -30,8 +32,10 @@ public class ValidationManager {
         return result;
     }
 
-    public ValidationManager(DataManager dataManager) {
+    public ValidationManager(DataManager dataManager, BusManager busManager, TripManager tripManager) {
         this.dataManager = dataManager;
+        this.busManager = busManager;
+        this.tripManager = tripManager;
         validatorList = loadAllValidators();
     }
 

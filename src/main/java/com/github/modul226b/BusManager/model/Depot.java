@@ -11,8 +11,10 @@ import java.util.List;
 public class Depot implements IValidatable {
     private String name;
     private List<String> busNames;
+    private DataManager dataManager;
 
-    public Depot(String depotName) {
+    public Depot(DataManager dataManager, String depotName) {
+        this.dataManager = dataManager;
         assert depotName != null : "name should not be null.";
 
         this.name = depotName;
@@ -20,19 +22,17 @@ public class Depot implements IValidatable {
     }
 
     public List<Bus> getBuses() {
-        return DataManager.getInstance().getBuses(busNames);
+        return dataManager.getDataHandler().getBuses(busNames);
     }
 
     public void addBus(String bus) {
-        DataManager instance = DataManager.getInstance();
-        assert instance.getBus(bus) != null : "bus must be registered.";
+        assert dataManager.getDataHandler().getBus(bus) != null : "bus must be registered.";
 
         busNames.add(bus);
     }
 
     public void removeBus(String bus) {
-        DataManager instance = DataManager.getInstance();
-        assert instance.getBus(bus) != null : "bus must be registered.";
+        assert dataManager.getDataHandler().getBus(bus) != null : "bus must be registered.";
 
         busNames.remove(bus);
     }

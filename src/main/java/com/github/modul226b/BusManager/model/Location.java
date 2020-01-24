@@ -5,18 +5,20 @@ import lombok.Getter;
 
 @Getter
 public class Location implements IValidatable {
+    private DataManager dataManager;
     private Integer id;
     private Integer x;
     private Integer y;
 
-    public Location(Integer id, Integer x, Integer y) {
+    public Location(DataManager dataManager, Integer id, Integer x, Integer y) {
+        this.dataManager = dataManager;
         this.id = id;
         this.x = x;
         this.y = y;
     }
 
-    public Location(Integer x, Integer y) {
-        this(DataManager.getInstance().getNextLocationId(), x, y);
+    public Location(DataManager dataManager, Integer x, Integer y) {
+        this(dataManager, dataManager.getDataHandler().getNextLocationId(), x, y);
     }
 
     @Override

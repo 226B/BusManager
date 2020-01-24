@@ -2,11 +2,9 @@ package com.github.modul226b.BusManager.model;
 
 import com.github.modul226b.BusManager.helpers.TimeHelper;
 import com.github.modul226b.BusManager.manager.DataManager;
-import com.github.modul226b.BusManager.manager.TripManager;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Getter
 public class Trip implements IValidatable {
@@ -16,9 +14,11 @@ public class Trip implements IValidatable {
     private String busName;
     private Integer startId;
     private Integer endId;
+    private DataManager dataManager;
 
-    public Trip(Integer id, LocalDateTime start, LocalDateTime arrivalTime, Bus bus, BusStation startStation, BusStation endStation) {
+    public Trip(DataManager dataManager, Integer id, LocalDateTime start, LocalDateTime arrivalTime, Bus bus, BusStation startStation, BusStation endStation) {
         this(
+                dataManager,
                 id,
                 TimeHelper.toLong(start),
                 TimeHelper.toLong(arrivalTime),
@@ -27,22 +27,21 @@ public class Trip implements IValidatable {
                 endStation.getLocation()
         );
     }
-    public Trip(LocalDateTime start, LocalDateTime arrivalTime, Bus bus, BusStation startStation, BusStation endStation) {
-        this(DataManager.getInstance().getNextTripId(), start, arrivalTime, bus, startStation, endStation);
+    public Trip(DataManager dataManager, LocalDateTime start, LocalDateTime arrivalTime, Bus bus, BusStation startStation, BusStation endStation) {
+        this(dataManager, dataManager.getDataHandler().getNextTripId(), start, arrivalTime, bus, startStation, endStation);
     }
 
-    private Trip(Integer id, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
+    private Trip(DataManager dataManager, Integer id, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
+        this.dataManager = dataManager;
         assert bus != null : "bus can not be null";
         assert start != null : "start can not be null";
         assert end != null : "end can not be null";
 
-        DataManager instance = DataManager.getInstance();
-
-        assert instance.getBus(bus.getName()) != null : "bus must be registered.";
-        assert instance.getLocation(start.getId()) != null : "start Location must be registered.";
-        assert instance.getLocation(end.getId()) != null : "end Location must be registered.";
-        assert instance.getStation(start.getId()) != null : "start must be a BusStation";
-        assert instance.getStation(end.getId()) != null : "end must be a BusStation";
+        assert dataManager.getDataHandler().getBus(bus.getName()) != null : "bus must be registered.";
+        assert dataManager.getDataHandler().getLocation(start.getId()) != null : "start Location must be registered.";
+        assert dataManager.getDataHandler().getLocation(end.getId()) != null : "end Location must be registered.";
+        assert dataManager.getDataHandler().getStation(start.getId()) != null : "start must be a BusStation";
+        assert dataManager.getDataHandler().getStation(end.getId()) != null : "end must be a BusStation";
 
         assert startTime < arrivalTime : "start must be before end.";
 
@@ -54,21 +53,21 @@ public class Trip implements IValidatable {
         this.endId = end.getId();
     }
 
-    private Trip(long startTime, long arrivalTime, Bus bus, Location start, Location end) {
-        this(DataManager.getInstance().getNextTripId(), startTime, arrivalTime, bus, start, end);
+    private Trip(DataManager dataManager, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
+        this(dataManager, dataManager.getDataHandler().getNextTripId(), startTime, arrivalTime, bus, start, end);
     }
 
 
     public Bus getBus() {
-        return DataManager.getInstance().getBus(this.busName);
+        return dataManager.getDataHandler().getBus(this.busName);
     }
 
     public Location getStart() {
-        return DataManager.getInstance().getLocation(this.startId);
+        return dataManager.getDataHandler().getLocation(this.startId);
     }
 
     public Location getEnd() {
-        return DataManager.getInstance().getLocation(this.endId);
+        return dataManager.getDataHandler().getLocation(this.endId);
     }
 
     @Override

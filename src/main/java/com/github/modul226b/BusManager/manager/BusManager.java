@@ -3,7 +3,6 @@ package com.github.modul226b.BusManager.manager;
 import com.github.modul226b.BusManager.helpers.TimeHelper;
 import com.github.modul226b.BusManager.model.*;
 
-import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -45,7 +44,7 @@ public class BusManager {
         return null;
     }
 
-    public BusStation getLastStation(@NotNull Bus bus) {
+    public BusStation getLastStation(Bus bus) {
         assert bus != null : "bus can not be null";
 
         List<Trip> collect = dataManager.getDataHandler().getAllTrips().stream()

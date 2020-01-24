@@ -11,8 +11,14 @@ import java.util.Set;
 public class ServiceManager {
 
     private HashMap<Class<? extends AbstractService>, AbstractService> serviceHashMap;
+    private DataManager dataManager;
+    private BusManager busManager;
+    private TripManager tripManager;
 
-    public ServiceManager() {
+    public ServiceManager(DataManager dataManager, BusManager busManager, TripManager tripManager) {
+        this.dataManager = dataManager;
+        this.busManager = busManager;
+        this.tripManager = tripManager;
         serviceHashMap = new HashMap<>();
 
         for (AbstractService loadService : loadServices()) {
@@ -32,7 +38,7 @@ public class ServiceManager {
         classes = reflections.getSubTypesOf(AbstractService.class);
         for (Class<? extends AbstractService> c : classes) {
             try {
-                AbstractService e = c.newInstance();
+                AbstractService e = c.getConstructor(DataManager.class, BusManager.class, TripManager.class).newInstance(dataManager,busManager, tripManager);
                 result.add(e);
 
                 if (e.startOnStartUp()) {

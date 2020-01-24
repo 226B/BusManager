@@ -12,16 +12,17 @@ public class BusStation implements IValidatable {
     private Integer locationId;
     private String depotName;
     private List<Integer> terminalIds;
+    private DataManager dataManager;
 
-    public BusStation(String name, Location location, Depot depot) {
+    public BusStation(DataManager dataManager, String name, Location location, Depot depot) {
+        this.dataManager = dataManager;
+        assert dataManager != null : "dataManager can not be null";
         assert name != null : "name can not be null.";
         assert location != null : "location can not be null.";
         assert depot != null : "depot can not be null";
 
-        DataManager instance = DataManager.getInstance();
-
-        assert instance.getLocation(location.getId()) != null : "location must be registered.";
-        assert instance.getDepot(depot.getName()) != null : "depot must be registered.";
+        assert dataManager.getDataHandler().getLocation(location.getId()) != null : "location must be registered.";
+        assert dataManager.getDataHandler().getDepot(depot.getName()) != null : "depot must be registered.";
 
         this.name = name;
         this.locationId = location.getId();
@@ -29,27 +30,26 @@ public class BusStation implements IValidatable {
         this.terminalIds = new ArrayList<>();
     }
 
-    public BusStation(String name, Depot depot, Integer x, Integer y) {
-        this(name, new Location(DataManager.getInstance().getNextLocationId(), x, y), depot);
+    public BusStation(DataManager dataManager, String name, Depot depot, Integer x, Integer y) {
+        this(dataManager, name, new Location(dataManager, dataManager.getDataHandler().getNextLocationId(), x, y), depot);
     }
 
     public void addTerminal(int id) {
-        DataManager instance = DataManager.getInstance();
-        assert instance.getTerminal(id) != null : "terminal must be registered.";
+        assert dataManager.getDataHandler().getTerminal(id) != null : "terminal must be registered.";
 
         terminalIds.add(id);
     }
 
     public Location getLocation() {
-        return DataManager.getInstance().getLocation(this.locationId);
+        return dataManager.getDataHandler().getLocation(this.locationId);
     }
 
     public Depot getDepot() {
-        return DataManager.getInstance().getDepot(this.depotName);
+        return dataManager.getDataHandler().getDepot(this.depotName);
     }
 
     public List<Terminal> getTerminals() {
-        return DataManager.getInstance().getTerminals(terminalIds);
+        return dataManager.getDataHandler().getTerminals(terminalIds);
     }
 
     @Override

@@ -3,30 +3,34 @@ package com.github.modul226b.BusManager.model;
 import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 public class Bus implements IValidatable {
     private String name;
     private String typeName;
+    private DataManager dataManager;
 
-    public Bus(String name, BusType type) {
+    public Bus(DataManager dataManager, String name, BusType type) {
+        this.dataManager = dataManager;
+
+        assert dataManager != null:  "dataManager can not be null";
         assert name != null : "name can not be null";
         assert type != null : "Type can not be null";
 
-        DataManager instance = DataManager.getInstance();
-        assert instance.getBusType(type.getName()) != null : "bustype must be registered.";
+        assert dataManager.getDataHandler().getBusType(type.getName()) != null : "bustype must be registered.";
 
         this.name = name;
         this.typeName = type.getName();
     }
 
     public BusType getType() {
-        return DataManager.getInstance().getBusType(this.typeName);
+        return dataManager.getDataHandler().getBusType(this.typeName);
     }
 
     public void setType(BusType type) {
         assert type != null : "type can not be null";
-        DataManager instance = DataManager.getInstance();
-        assert instance.getBusType(type.getName()) != null : "type must be registered.";
+        assert dataManager.getDataHandler().getBusType(type.getName()) != null : "type must be registered.";
 
         this.typeName = type.getName();
     }

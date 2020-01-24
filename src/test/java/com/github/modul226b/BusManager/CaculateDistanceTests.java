@@ -1,6 +1,7 @@
 package com.github.modul226b.BusManager;
 
 import com.github.modul226b.BusManager.datahandeling.MockDataHandler;
+import com.github.modul226b.BusManager.manager.BusManager;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.manager.TripManager;
 import com.github.modul226b.BusManager.model.BusStation;
@@ -16,25 +17,27 @@ public class CaculateDistanceTests {
     @Test
     public void test() {
         //ARRANGE
-        DataManager.setInstance(new MockDataHandler());
+        DataManager dataManager = new DataManager(new MockDataHandler());
+        BusManager busManager = new BusManager(dataManager);
+        TripManager tripManager = new TripManager(dataManager, busManager);
 
-        Location location = new Location(100, 100);
-        DataManager.getInstance().addLocation(location);
-        Location location1 = new Location(200, 200);
-        DataManager.getInstance().addLocation(location1);
-        Depot zd = new Depot("Zd");
-        DataManager.getInstance().addDepot(zd);
-        Depot bd = new Depot("Bd");
-        DataManager.getInstance().addDepot(bd);
+        Location location = new Location(dataManager, 100, 100);
+        dataManager.getDataHandler().addLocation(location);
+        Location location1 = new Location(dataManager, 200, 200);
+        dataManager.getDataHandler().addLocation(location1);
+        Depot zd = new Depot(dataManager, "Zd");
+        dataManager.getDataHandler().addDepot(zd);
+        Depot bd = new Depot(dataManager, "Bd");
+        dataManager.getDataHandler().addDepot(bd);
 
-        BusStation z = new BusStation("z", location, zd);
-        BusStation b = new BusStation("b", location1, bd);
+        BusStation z = new BusStation(dataManager, "z", location, zd);
+        BusStation b = new BusStation(dataManager, "b", location1, bd);
         BusType busType = new BusType("bus", 300, 10, 10, 100.0);
 
         LocalDateTime now = LocalDateTime.of(2020, 1, 1, 0,0,0);
 
         //ACT
-        LocalDateTime time = TripManager.getInstance().getArrivalTime(
+        LocalDateTime time = tripManager.getArrivalTime(
                 now, busType,
                 z,
                 b);

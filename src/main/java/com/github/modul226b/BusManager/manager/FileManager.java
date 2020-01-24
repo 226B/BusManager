@@ -5,6 +5,8 @@ import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -28,7 +30,8 @@ public class FileManager {
             }
             return new JsonDataHolder();
         } else {
-            JsonDataHolder jsonDataHolder = new Gson().fromJson(String.join(" ", Files.readAllLines(path.toAbsolutePath())), JsonDataHolder.class);
+            String join = String.join(" ", Files.readAllLines(path.toAbsolutePath(), StandardCharsets.UTF_8));
+            JsonDataHolder jsonDataHolder = new Gson().fromJson(join, JsonDataHolder.class);
 
             if (jsonDataHolder == null) {
                 System.out.println("date could not be loaded from json file...");

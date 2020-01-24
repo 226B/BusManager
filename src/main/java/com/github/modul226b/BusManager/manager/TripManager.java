@@ -60,6 +60,7 @@ public class TripManager {
         }
 
         Trip trip = new Trip(
+                dataManager,
                 time,
                 arrivalTime,
                 bus,

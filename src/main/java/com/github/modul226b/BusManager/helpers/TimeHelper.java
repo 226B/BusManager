@@ -13,7 +13,6 @@ public class TimeHelper {
 
     public static LocalDateTime toLocalDateTime(long time) {
         Instant instant = Instant.ofEpochMilli(time);
-        LocalDateTime date = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
-        return date;
+        return instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 }

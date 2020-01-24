@@ -12,14 +12,15 @@ public class Terminal implements IValidatable {
     private String displayName;
     private String typeName;
     private List<Integer> tripIds;
+    private DataManager dataManager;
 
-    public Terminal(Integer id, String displayName, TerminalType type) {
+    public Terminal(DataManager dataManager, Integer id, String displayName, TerminalType type) {
+        this.dataManager = dataManager;
         assert type != null : "gatetype can not be null";
         assert displayName != null : "displayName can not be null";
         assert id != null : "ID can not be null";
 
-        DataManager instance = DataManager.getInstance();
-        assert instance.getTerminalType(type.getName()) != null : "terminal type must be registered";
+        assert dataManager.getDataHandler().getTerminalType(type.getName()) != null : "terminal type must be registered";
 
         this.id = id;
         this.displayName = displayName;
@@ -27,16 +28,16 @@ public class Terminal implements IValidatable {
         this.tripIds = new ArrayList<>();
     }
 
-    public Terminal(String displayName, TerminalType type) {
-        this(DataManager.getInstance().getNextTerminalId(), displayName, type);
+    public Terminal(DataManager dataManager, String displayName, TerminalType type) {
+        this(dataManager, dataManager.getDataHandler().getNextTerminalId(), displayName, type);
     }
 
     public TerminalType getType() {
-        return DataManager.getInstance().getTerminalType(typeName);
+        return dataManager.getDataHandler().getTerminalType(typeName);
     }
 
     public List<Trip> getTrips() {
-        return DataManager.getInstance().getTrips(tripIds);
+        return dataManager.getDataHandler().getTrips(tripIds);
     }
 
     @Override

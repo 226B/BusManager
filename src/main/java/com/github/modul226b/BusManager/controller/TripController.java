@@ -3,6 +3,7 @@ package com.github.modul226b.BusManager.controller;
 
 import com.github.modul226b.BusManager.dtos.CreateTripDto;
 import com.github.modul226b.BusManager.dtos.TripDto;
+import com.github.modul226b.BusManager.manager.BusManager;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.manager.TripManager;
 import com.github.modul226b.BusManager.model.Trip;
@@ -19,18 +20,22 @@ import java.util.List;
 @CrossOrigin(origins = {"*"})
 public class TripController {
 
-    private DataManager manager;
+    private DataManager dataManager;
+    private BusManager busManager;
+    private TripManager tripManager;
 
     @Autowired
-    public TripController(DataManager manager) {
-        this.manager = manager;
+    public TripController(DataManager dataManager, BusManager busManager, TripManager tripManager) {
+        this.dataManager = dataManager;
+        this.busManager = busManager;
+        this.tripManager = tripManager;
     }
 
     @GetMapping("get")
     public List<TripDto> getTripList() {
         List<TripDto> dtoList = new ArrayList<TripDto>();
-        manager.getDataHandler().getAllTrips().forEach(trip -> {
-            dtoList.add(TripDto.toDto(trip));
+        dataManager.getDataHandler().getAllTrips().forEach(trip -> {
+            dtoList.add(TripDto.toDto(dataManager, trip));
         });
         return dtoList;
     }
@@ -40,12 +45,12 @@ public class TripController {
 
         //todo check if createTripDto is valid
 
-        Trip trip = TripManager.getInstance().addTrip(
+        Trip trip = tripManager.addTrip(
                 createTripDto.getStartStation(),
                 createTripDto.getCapacity(),
                 createTripDto.getEndStation(),
                 createTripDto.getTime()
         );
-        return new ResponseEntity<>(TripDto.toDto(trip), HttpStatus.OK);
+        return new ResponseEntity<>(TripDto.toDto(dataManager, trip), HttpStatus.OK);
     }
 }
