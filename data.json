@@ -136,10 +136,7 @@
       "id": 0,
       "displayName": "Z01",
       "typeName": "national",
-      "tripIds": [
-        1,
-        2
-      ]
+      "tripIds": []
     },
     "1": {
       "id": 1,
@@ -163,10 +160,7 @@
       "id": 4,
       "displayName": "B01",
       "typeName": "national",
-      "tripIds": [
-        1,
-        2
-      ]
+      "tripIds": []
     },
     "5": {
       "id": 5,
@@ -273,22 +267,5 @@
       "y": 50
     }
   },
-  "trips": {
-    "1": {
-      "id": 1,
-      "startTime": 1196708400,
-      "arrivalTime": 1196712000,
-      "busName": "ZH01",
-      "startId": 0,
-      "endId": 1
-    },
-    "2": {
-      "id": 2,
-      "startTime": 1228294800,
-      "arrivalTime": 1228298400,
-      "busName": "ZH01",
-      "startId": 0,
-      "endId": 1
-    }
-  }
+  "trips": {}
 }

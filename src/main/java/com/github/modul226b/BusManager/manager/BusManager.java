@@ -89,7 +89,7 @@ public class BusManager {
     public Bus getFreeBus(LocalDateTime startTime, int capacity, BusStation start) {
 
         List<BusType> types = dataManager.getDataHandler().getBusTypes().stream()
-                .filter(busType -> busType.getCapacity() >= capacity)
+                .filter(busType -> busType.getCapacity() <= capacity)
                 .sorted(Comparator.comparingInt(BusType::getCapacity))
                 .collect(Collectors.toList());
 
@@ -105,7 +105,13 @@ public class BusManager {
                     continue;
                 }
 
-                if (getLastTrip(bus).getStartTime() < TimeHelper.toLong(startTime)) {
+                Trip lastTrip = getLastTrip(bus);
+
+                if (lastTrip == null) {
+                    return bus;
+                }
+
+                if (lastTrip.getStartTime() < TimeHelper.toLong(startTime)) {
                     return bus;
                 }
             }

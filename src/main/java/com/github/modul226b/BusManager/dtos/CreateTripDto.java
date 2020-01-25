@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ public class CreateTripDto {
     String endStation;
     int capacity;
     @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonFormat(pattern="dd/MM/yyyy hh:mm")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     LocalDateTime time;
 }

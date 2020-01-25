@@ -54,7 +54,7 @@ public class TripManager {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freies Terminal in " + start.getName()  + " gefunden.");
         }
 
-        Terminal endTerminal = this.getFreeTerminals(busType, start, arrivalTime).stream().findFirst().orElse(null);
+        Terminal endTerminal = this.getFreeTerminals(busType, end, arrivalTime).stream().findFirst().orElse(null);
 
         if (endTerminal == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Kein freies Terminal in " + end.getName()  + " gefunden.");
