@@ -59,6 +59,10 @@
       "name": "I03",
       "typeName": "gross"
     },
+    "cloud": {
+      "name": "cloud",
+      "typeName": "gross"
+    },
     "CH06": {
       "name": "CH06",
       "typeName": "mittel"
@@ -246,7 +250,8 @@
         "GE03",
         "CH05",
         "CH06",
-        "I03"
+        "I03",
+        "cloud"
       ]
     }
   },

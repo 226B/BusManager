@@ -1,8 +1,12 @@
 package com.github.modul226b.BusManager.controller;
 
 import com.github.modul226b.BusManager.dtos.BusDto;
+import com.github.modul226b.BusManager.dtos.CreateTripInformation;
+import com.github.modul226b.BusManager.dtos.StationList;
+import com.github.modul226b.BusManager.manager.BusManager;
 import com.github.modul226b.BusManager.manager.DataManager;
 import com.github.modul226b.BusManager.model.Bus;
+import com.github.modul226b.BusManager.model.BusStation;
 import com.github.modul226b.BusManager.model.BusType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/bus/")
@@ -19,17 +24,20 @@ import java.util.List;
 public class BusController {
 
     private DataManager dataManager;
+    private BusManager busManager;
 
     @Autowired
-    public BusController(DataManager dataManager) {
+    public BusController(DataManager dataManager, BusManager busManager) {
         this.dataManager = dataManager;
+        this.busManager = busManager;
     }
 
     @GetMapping("get/")
     public List<BusDto> getAllBuses() {
         List<BusDto> daos = new ArrayList<>();
-        for (Bus bus : dataManager.getDataHandler().getBuses()) {
-            daos.add(BusDto.ToDao(dataManager, bus));
+        List<Bus> buses = dataManager.getDataHandler().getAllBuses();
+        for (Bus bus : buses) {
+            daos.add(BusDto.ToDao(dataManager, busManager, bus));
         }
 
         Comparator<BusDto> comparing = Comparator.comparing(o -> o.getType().getName());
@@ -43,7 +51,7 @@ public class BusController {
 
     @GetMapping("get/{busName}")
     public BusDto getBus(@PathVariable String busName) {
-        BusDto bus = BusDto.ToDao(dataManager, dataManager.getDataHandler().getBus(busName));
+        BusDto bus = BusDto.ToDao(dataManager, busManager,dataManager.getDataHandler().getBus(busName));
 
         if (bus == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Bus mit dem namen " + busName + " nicht gefunden.");
@@ -67,6 +75,7 @@ public class BusController {
         }
 
         dataManager.getDataHandler().addBus(new Bus(bus.getName(), bus.getType()));
+        dataManager.getDataHandler().getDepot(dataManager.getDataHandler().getStation(bus.getStation()).getDepotName()).addBus(bus.getName());
     }
 
     @GetMapping("type/get/")
@@ -114,5 +123,12 @@ public class BusController {
         }
 
         dataManager.getDataHandler().removeBusType(bus);
+    }
+
+    @GetMapping("getinfo")
+    public StationList getInfo() {
+        return new StationList(
+                dataManager.getDataHandler().getAllStations().stream().map(BusStation::getName).collect(Collectors.toList())
+        );
     }
 }
