@@ -10,6 +10,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+/**
+ * simple bean holder for singleton objects used in controllers.
+ */
 @Configuration
 @ComponentScan("com.github.modul226b.BusManager.manager")
 public class AppConfig {

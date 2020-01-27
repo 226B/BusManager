@@ -10,6 +10,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * base class for JSON data storage, this class is the basis for {@link JsonDataHandler} and {@link MockDataHandler}.
+ * this class is based on a {@link JsonDataHolder} for managing objects.
+ */
 public class BaseJsonDataHandler implements IDataHandler {
 
     @Getter(AccessLevel.PROTECTED)
@@ -105,6 +109,26 @@ public class BaseJsonDataHandler implements IDataHandler {
     @Override
     public Integer getNextLocationId() {
         return (dataHolder.getLocations().size() > 0) ? Collections.max(dataHolder.getLocations().keySet()) + 1 : 0;
+    }
+
+    @Override
+    public List<Terminal> getAllTerminals() {
+        return new ArrayList<>(dataHolder.getTerminals().values());
+    }
+
+    @Override
+    public List<TerminalType> getAllTerminalTypes() {
+        return new ArrayList<>(dataHolder.getTerminalTypes().values());
+    }
+
+    @Override
+    public BusStation getStationForTerminal(int terminalId) {
+        for (BusStation station : this.getAllStations()) {
+            if (station.getTerminalIds().contains(terminalId)) {
+                return station;
+            }
+        }
+        return null;
     }
 
     @Override
