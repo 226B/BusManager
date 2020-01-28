@@ -9,6 +9,9 @@ import com.github.modul226b.BusManager.validator.internal.ValidationResult;
 import com.github.modul226b.BusManager.validator.internal.ValidationState;
 import com.github.modul226b.BusManager.validator.internal.AbstractValidator;
 
+/**
+ * Checks if a bus is in a Station.
+ */
 public class BusInDepotValidator extends AbstractValidator<Bus> {
     public BusInDepotValidator(DataManager dataManager, BusManager busManager, TripManager tripManager) {
         super(dataManager, busManager, tripManager);

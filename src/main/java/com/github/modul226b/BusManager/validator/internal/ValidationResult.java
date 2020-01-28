@@ -4,6 +4,9 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+/**
+ * this Class that represents the Result of a Validation.
+ */
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidationResult {

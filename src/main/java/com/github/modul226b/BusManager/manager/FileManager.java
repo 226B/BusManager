@@ -11,6 +11,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Simple FileLoader.
+ */
 public class FileManager {
     private final String fileName;
 
@@ -18,6 +21,11 @@ public class FileManager {
         this.fileName = fileName;
     }
 
+    /**
+     * Loading a JsonFile into a JsonDataHolder.
+     * @return the generated JsonDataHolder.
+     * @throws IOException if the FileLoading fails.
+     */
     public JsonDataHolder load() throws IOException {
         Path path = Paths.get(fileName);
         File f = new File(path.toAbsolutePath().toString());

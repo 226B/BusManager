@@ -1,15 +1,15 @@
 package com.github.modul226b.BusManager.manager;
 
 import com.github.modul226b.BusManager.datahandeling.IDataHandler;
-import com.github.modul226b.BusManager.datahandeling.JsonDataHandler;
 import com.github.modul226b.BusManager.validator.internal.ValidationResult;
 import com.github.modul226b.BusManager.validator.internal.ValidationState;
 import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Delegate;
 
 import java.util.List;
 
+/**
+ * Base Class to get all Objects currently in the Application.
+ */
 public class DataManager {
     @Getter
     private IDataHandler dataHandler;

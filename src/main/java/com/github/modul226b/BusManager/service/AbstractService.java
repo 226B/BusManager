@@ -7,6 +7,9 @@ import lombok.Getter;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ *
+ */
 public abstract class AbstractService {
     private volatile boolean exit = false;
     private boolean started = false;
@@ -29,7 +32,7 @@ public abstract class AbstractService {
         new Thread(() -> {
            while (!exit) {
                try {
-                   TimeUnit.SECONDS.sleep(getInterval());
+                   TimeUnit.SECONDS.sleep(getIntervalInSeconds());
                } catch (InterruptedException e) {
                    e.printStackTrace();
                }
@@ -56,7 +59,7 @@ public abstract class AbstractService {
         return this.getClass().getSimpleName();
     }
 
-    public abstract int getInterval();
+    public abstract int getIntervalInSeconds();
 
     public abstract void run();
 }

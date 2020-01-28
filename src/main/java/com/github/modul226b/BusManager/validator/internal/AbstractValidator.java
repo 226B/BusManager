@@ -6,6 +6,10 @@ import com.github.modul226b.BusManager.manager.TripManager;
 import com.github.modul226b.BusManager.model.IValidatable;
 import lombok.Getter;
 
+/**
+ * Base Class for the Validation mechanic. Every Validator needs to implement this Class.
+ * @param <V> The Type that should be validated.
+ */
 @Getter
 public abstract class AbstractValidator<V extends IValidatable> {
     private DataManager dataManager;
@@ -18,11 +22,11 @@ public abstract class AbstractValidator<V extends IValidatable> {
         this.tripManager = tripManager;
     }
 
+    /**
+     * the Method that is Called for Validating a Object.
+     * @param validation the Objects to be validated.
+     * @return the {@link ValidationResult} that represents the result of the validation.
+      */
     public abstract ValidationResult validate(V validation);
     public abstract Class<? extends IValidatable> getType();
-
-    public boolean isType(Object object) {
-        return object.getClass() == getType();
-    }
-
 }

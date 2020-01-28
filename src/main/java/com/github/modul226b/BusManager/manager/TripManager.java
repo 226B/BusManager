@@ -9,6 +9,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * TripManager is responsible for adding Trips and help Methods.
+ */
 public class TripManager {
     private DataManager dataManager;
     private BusManager busManager;
@@ -18,6 +21,15 @@ public class TripManager {
         this.busManager = busManager;
     }
 
+    /**
+     * adds a Trip, this Class gets a Free Terminal and a Bus and calculates the arrivalTime.
+     * @param startStation the name of the Start Station.
+     * @param capacity the Amount of People that should fit in a Bus.
+     * @param endStation the name of the End Station.
+     * @param time the Start time.
+     * @return the Object that was created.
+     * @throws ResponseStatusException if any of the Objects could not be get it will throw this Exception.
+     */
     public Trip addTrip(String startStation, int capacity, String endStation, LocalDateTime time) throws ResponseStatusException {
         BusStation start = dataManager.getDataHandler().getStation(startStation);
         BusStation end = dataManager.getDataHandler().getStation(endStation);
@@ -77,6 +89,14 @@ public class TripManager {
     }
 
 
+    /**
+     * Calculates the time it takes from one Station to a other Station.
+     * @param startTime the Start time.
+     * @param busType the Type of bus that should drive.
+     * @param start the Start Station.
+     * @param end the End Station.
+     * @return the arrival time.
+     */
     public LocalDateTime getArrivalTime(LocalDateTime startTime, BusType busType, BusStation start, BusStation end) {
         Location startLocation = dataManager.getDataHandler().getLocation(start.getLocationId());
         Location endLocation = dataManager.getDataHandler().getLocation(end.getLocationId());
@@ -89,6 +109,13 @@ public class TripManager {
         return startTime.plusSeconds(time);
     }
 
+    /**
+     * gets all free Terminals for the Station at the time.
+     * @param type Type is needed for the Capacity of the Terminal.
+     * @param station the Start station.
+     * @param time the time when it should get a Free Terminal.
+     * @return a List of all Terminals that are free at this Station at the specific time.
+     */
     public List<Terminal> getFreeTerminals(BusType type, BusStation station, LocalDateTime time) {
         List<Terminal> result = new ArrayList<>();
         for (Terminal terminal : dataManager.getDataHandler().getTerminals(station.getTerminalIds())) {

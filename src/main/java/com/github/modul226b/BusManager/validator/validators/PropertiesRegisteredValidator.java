@@ -8,6 +8,9 @@ import com.github.modul226b.BusManager.validator.internal.ValidationResult;
 import com.github.modul226b.BusManager.validator.internal.ValidationState;
 import com.github.modul226b.BusManager.validator.internal.AbstractValidator;
 
+/**
+ * A Validator that checks if all Properies are registered.
+ */
 public class PropertiesRegisteredValidator extends AbstractValidator<IValidatable> {
 
     public PropertiesRegisteredValidator(DataManager dataManager, BusManager busManager, TripManager tripManager) {

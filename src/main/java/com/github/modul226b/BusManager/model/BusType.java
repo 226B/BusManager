@@ -2,6 +2,9 @@ package com.github.modul226b.BusManager.model;
 
 import lombok.Getter;
 
+/**
+ * Class representing a BusType.
+ */
 @Getter
 public class BusType implements IValidatable {
     private String name;

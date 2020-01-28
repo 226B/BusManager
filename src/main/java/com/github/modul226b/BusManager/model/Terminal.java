@@ -1,6 +1,5 @@
 package com.github.modul226b.BusManager.model;
 
-import com.github.modul226b.BusManager.manager.DataManager;
 import lombok.Getter;
 
 import java.util.ArrayList;

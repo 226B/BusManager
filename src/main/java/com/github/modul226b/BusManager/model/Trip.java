@@ -2,6 +2,9 @@ package com.github.modul226b.BusManager.model;
 
 import lombok.Getter;
 
+/**
+ * The Class Representing a Trip.
+ */
 @Getter
 public class Trip implements IValidatable {
     private Integer id;
@@ -11,6 +14,14 @@ public class Trip implements IValidatable {
     private Integer startId;
     private Integer endId;
 
+    /**
+     * @param id the ID, can be null.
+     * @param startTime the Start time as a UNIX timestamp.
+     * @param arrivalTime the Arrival time as a UNIX timestamp.
+     * @param bus the Bus for the Trip.
+     * @param start the Location for the Start Station.
+     * @param end the Location for the End Station.
+     */
     public Trip(Integer id, long startTime, long arrivalTime, Bus bus, Location start, Location end) {
         assert bus != null : "bus can not be null";
         assert start != null : "start can not be null";

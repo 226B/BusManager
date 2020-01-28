@@ -8,6 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This Manager manages the Repeating tasks for the Application.
+ * Gets all Services in the Package: "com.github.modul226b.BusManager.service.services"
+ */
 public class ServiceManager {
 
     private HashMap<Class<? extends AbstractService>, AbstractService> serviceHashMap;
@@ -30,6 +34,10 @@ public class ServiceManager {
         serviceHashMap.put(service.getClass(), service);
     }
 
+    /**
+     * loads all the Services in the Package "com.github.modul226b.BusManager.service.services"
+     * @return all Services.
+     */
     private List<AbstractService> loadServices() {
         List<AbstractService> result = new ArrayList<>();
 

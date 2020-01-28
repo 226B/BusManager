@@ -9,6 +9,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Simple Manger for buses.
+ */
 public class BusManager {
     private DataManager dataManager;
 
@@ -16,6 +19,12 @@ public class BusManager {
         this.dataManager = dataManager;
     }
 
+    /**
+     * get the Station for a Bus at a specific time.
+     * @param bus the Bus.
+     * @param time the time.
+     * @return the Station, null if none is found, should never happen.
+     */
     public BusStation getStationAtTime(Bus bus, LocalDateTime time) {
         List<Trip> allTrips = dataManager.getDataHandler().getAllTrips();
         List<Trip> collect = allTrips.stream().filter(trip -> trip.getBusName().equals(bus.getName())).sorted(Comparator.comparingLong(Trip::getArrivalTime)).collect(Collectors.toList());
@@ -34,6 +43,11 @@ public class BusManager {
         return dataManager.getDataHandler().getStation(collect.get(collect.size() - 1).getEndId());
     }
 
+    /**
+     * gets the current depot for a Bus.
+     * @param bus the bus.
+     * @return the Depot.
+     */
     public Depot getDepotStation(Bus bus) {
         for (Depot depot : dataManager.getDataHandler().getAllDepots()) {
             List<Bus> buses = dataManager.getDataHandler().getBuses(depot.getBusNames());
@@ -44,6 +58,11 @@ public class BusManager {
         return null;
     }
 
+    /**
+     * gets the Last Station for a Bus.
+     * @param bus the bus.
+     * @return the BusStation.
+     */
     public BusStation getLastStation(Bus bus) {
         assert bus != null : "bus can not be null";
 
@@ -59,7 +78,6 @@ public class BusManager {
         return dataManager.getDataHandler().getStation(collect.get(collect.size() - 1).getEndId());
     }
 
-
     public BusStation getCurrentStation(Bus bus) {
         for (BusStation station : dataManager.getDataHandler().getAllStations()) {
             for (Bus bus1 : dataManager.getDataHandler()
@@ -72,6 +90,11 @@ public class BusManager {
         return null;
     }
 
+    /**
+     * gets the last Trip for a Bus.
+     * @param bus the bus.
+     * @return The Trip, null if the bus had no Trips.
+     */
     public Trip getLastTrip(Bus bus) {
         assert bus != null : "bus can not be null";
 
@@ -86,6 +109,14 @@ public class BusManager {
 
         return collect.get(collect.size() - 1);
     }
+
+    /**
+     * gets a free Bus at a time. in a Station.
+     * @param startTime the Start time
+     * @param capacity the Capacity for the bus.
+     * @param start the Station.
+     * @return the Free bus, null if none was found.
+     */
     public Bus getFreeBus(LocalDateTime startTime, int capacity, BusStation start) {
 
         List<BusType> types = dataManager.getDataHandler().getBusTypes().stream()

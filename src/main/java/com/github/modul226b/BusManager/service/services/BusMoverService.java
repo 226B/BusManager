@@ -10,6 +10,9 @@ import com.github.modul226b.BusManager.service.AbstractService;
 
 import java.time.LocalDateTime;
 
+/**
+ * Service responsible for moving Buses to the right Station.
+ */
 public class BusMoverService extends AbstractService {
 
     public BusMoverService(DataManager dataManager, BusManager busManager, TripManager tripManager) {
@@ -22,7 +25,7 @@ public class BusMoverService extends AbstractService {
     }
 
     @Override
-    public int getInterval() {
+    public int getIntervalInSeconds() {
         return 60;
     }
 

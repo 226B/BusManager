@@ -8,6 +8,9 @@ import com.github.modul226b.BusManager.validator.internal.ValidationResult;
 import com.github.modul226b.BusManager.validator.internal.ValidationState;
 import com.github.modul226b.BusManager.validator.internal.AbstractValidator;
 
+/**
+ * Checks if a Object is null.
+ */
 public class NullValidator extends AbstractValidator<IValidatable> {
     public NullValidator(DataManager dataManager, BusManager busManager, TripManager tripManager) {
         super(dataManager, busManager, tripManager);

@@ -1,5 +1,6 @@
 package com.github.modul226b.BusManager.manager;
 
+import com.github.modul226b.BusManager.datahandeling.IDataHandler;
 import com.github.modul226b.BusManager.model.IValidatable;
 import com.github.modul226b.BusManager.validator.internal.ValidationResult;
 import com.github.modul226b.BusManager.validator.internal.AbstractValidator;
@@ -10,13 +11,30 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Class Managing the Validation process.
+ * This Class will get all Classes that Implement {@link AbstractValidator} in the Package:
+ * com.github.modul226b.BusManager.validator.validators
+ */
 public class ValidationManager {
-    private List<AbstractValidator<?>> abstractValidatorList;
+    private List<AbstractValidator<? extends IValidatable>> abstractValidatorList;
     private DataManager dataManager;
     private BusManager busManager;
     private TripManager tripManager;
 
-    private List<AbstractValidator<?>> loadAllValidators() {
+    /**
+     * add Validator to the Validation Pool.
+     * @param validator the Validator that should be added.
+     */
+    private void addValidator(AbstractValidator<? extends IValidatable> validator) {
+        abstractValidatorList.add(validator);
+    }
+
+    /**
+     * This Class will get all Instances in the Package "com.github.modul226b.BusManager.validator.validators"
+     * @return a List of all AbstractValidators in the Package.
+     */
+    private List<AbstractValidator<? extends IValidatable>> loadAllValidators() {
         List<AbstractValidator<?>> result = new ArrayList<>();
 
         Reflections reflections = new Reflections("com.github.modul226b.BusManager.validator.validators");
@@ -39,6 +57,10 @@ public class ValidationManager {
         abstractValidatorList = loadAllValidators();
     }
 
+    /**
+     * This Class will call the {@link IDataHandler#getAllObjects()} method to get all Objects and Validate them with the right Validator.
+     * @return the Result of the Validation.
+     */
     public List<ValidationResult> validate() {
         List<ValidationResult> results = new ArrayList<>();
         List<IValidatable> objects = dataManager.getDataHandler().getAllObjects();
@@ -48,6 +70,9 @@ public class ValidationManager {
         return results;
     }
 
+    /**
+     * Validating a single Objects.
+     */
     public List<ValidationResult> validate(IValidatable... objects) {
         List<ValidationResult> results = new ArrayList<>();
         for (AbstractValidator<?> abstractValidator : abstractValidatorList) {

@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+/**
+ * simple helper methods to deal with time.
+ */
 public class TimeHelper {
     public static long toLong(LocalDateTime time) {
         ZonedDateTime zdt = ZonedDateTime.of(time, ZoneId.systemDefault());

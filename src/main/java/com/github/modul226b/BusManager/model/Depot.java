@@ -5,7 +5,9 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * A Depot for Buses.
+ */
 @Getter
 public class Depot implements IValidatable {
     private String name;
